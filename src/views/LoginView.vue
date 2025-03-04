@@ -43,17 +43,21 @@ export default {
   methods: {
     login() {
       if (this.username.length > 0 && this.password.length > 0) {
-        console.log("oled siin")
         this.sendLoginRequest();
       }
     },
 
-    sendLoginRequest() {
-      LoginService.sendLoginRequest(this.username, this.password)
-          .then(response => this.loginResponse = response.data)
-          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    handleLoginResponse(response) {
+      this.loginResponse = response.data;
       sessionStorage.setItem('profileId', this.loginResponse.profileId)
       sessionStorage.setItem('roleName', this.loginResponse.roleName)
+    },
+
+    sendLoginRequest() {
+      LoginService.sendLoginRequest(this.username, this.password)
+          .then(response => this.handleLoginResponse(response))
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+      // this.setSessionStorageProfile();
     },
   }
 }
