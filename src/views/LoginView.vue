@@ -26,6 +26,7 @@
 
 <script>
 import axios from "axios";
+import LoginService from "@/service/LoginService";
 
 export default {
   name: 'LoginView',
@@ -34,7 +35,7 @@ export default {
       username: '',
       password: '',
       loginResponse: {
-        userId: 0,
+        profileId: 0,
         roleName: ''
       }
     }
@@ -42,20 +43,17 @@ export default {
   methods: {
     login() {
       if (this.username.length > 0 && this.password.length > 0) {
+        console.log("oled siin")
         this.sendLoginRequest();
       }
     },
 
     sendLoginRequest() {
-      axios.get('/login', {
-            params: {
-              username: this.username,
-              password: this.password
-            }
-          }
-      )
+      LoginService.sendLoginRequest(this.username, this.password)
           .then(response => this.loginResponse = response.data)
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+      sessionStorage.setItem('profileId', this.loginResponse.profileId)
+      sessionStorage.setItem('roleName', this.loginResponse.roleName)
     },
   }
 }
