@@ -11,10 +11,10 @@
             <input v-model="password" type="text" class="form-control" placeholder="Password">
           </div>
           <div class="mb-3">
-          <button @click="login" type="button" class="btn btn-info">Log in</button>
+            <button @click="login" type="button" class="btn btn-info">Log in</button>
           </div>
           <div>
-          <button type="button" class="btn btn-info">Register</button>
+            <button type="button" class="btn btn-info">Register</button>
           </div>
 
         </div>
@@ -42,20 +42,21 @@ export default {
   methods: {
     login() {
       if (this.username.length > 0 && this.password.length > 0) {
-        sendLoginRequest(this.username, this.password)
-        {
-          axios.get('/login', {
-                params: {
-                  username: this.username,
-                  password: this.password
-                }
-              }
-          )
-              .then(response => this.loginResponse = response.data)
-              .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
-        }
+        this.sendLoginRequest();
       }
-    }
+    },
+
+    sendLoginRequest() {
+      axios.get('/login', {
+            params: {
+              username: this.username,
+              password: this.password
+            }
+          }
+      )
+          .then(response => this.loginResponse = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
   }
 }
 </script>
