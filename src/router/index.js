@@ -4,16 +4,19 @@ import HomeView from "@/views/HomeView.vue";
 
 const routes = [
   {
-    path: '/login',
-    name: 'logeinRoute',
-    component: LoginView
-    // TODO: fix name
-  },
-  {
     path: '/',
     name: 'homeRoute',
     component: HomeView
   },
+  {
+    path: '/login',
+    name: 'loginRoute',
+    component: LoginView
+  },
+  {
+    path: '/home',
+    redirect: '/'   // Optionally, redirect /home to /
+  }
 ]
 
 const router = createRouter({

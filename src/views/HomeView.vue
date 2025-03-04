@@ -1,28 +1,30 @@
 <template>
   <div>
-    SIIA TULEB KAART
+    <MapComponent :markers="locationStarts"/>
   </div>
 </template>
 
 <script>
 import LocationService from "@/service/LocationService";
+import MapComponent from "@/components/MapComponent.vue";
 
 export default {
   name: "HomeView",
+  components: {MapComponent},
   data() {
     return {
-      locationStart: {
+      locationStarts: [{
         name: '',
         latitude: 0,
         longitude: 0
-      }
+      }]
     }
   },
   methods: {
 
     sendLocationStartsRequest() {
       LocationService.sendLocationStartsRequest()
-          .then(response => this.locationStart = response.data)
+          .then(response => this.locationStarts = response.data)
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
