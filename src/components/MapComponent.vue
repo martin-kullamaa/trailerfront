@@ -9,6 +9,9 @@
 <script>
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import markerIcon from 'leaflet/dist/images/marker-icon.png'
+import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+
 
 export default {
   props: {
@@ -24,32 +27,47 @@ export default {
   methods: {
 
     initializeMap() {
+
       this.map = L.map(this.$refs.mapContainer).setView(this.center, this.zoom)
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19
       }).addTo(this.map)
+
+      this.addMarkers()
     },
 
     addMarkers() {
+      console.log("olen siin")
+      const customIcon = L.icon({
+        iconUrl: markerIcon,
+        shadowUrl: markerShadow,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
+
       for (const marker of this.markers) {
-        L.marker([marker.latitude, marker.longitude]).addTo(this.map);
+        if (marker.latitude === 0 && marker.longitude === 0) continue;
+        L.marker([marker.latitude, marker.longitude], { icon: customIcon })
+            .addTo(this.map);
       }
+      console.log('Marker icon URL:', markerIcon)
+      console.log('Marker shadow URL:', markerShadow)
     }
+
 
   },
 
   mounted() {
     this.initializeMap()
-    this.addMarkers()
   },
+  watch: {
+    markers() {
+      this.addMarkers();  // Add only when markers exist
+    }
+  }
 
 }
 </script>
-
-<!--<style>-->
-<!--.map-container {-->
-<!--  width: 80%;-->
-<!--  height: 720px;-->
-<!--}-->
-<!--</style>-->
