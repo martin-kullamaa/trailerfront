@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container text-center">
+    <div class="container text-center mt-5">
       <div class="row justify-content-center">
 
         <div class="col col-3">
