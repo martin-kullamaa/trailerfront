@@ -57,7 +57,7 @@ export default {
 
     addNewProfile() {
       ProfileService.sentPostNewProfile(this.newProfile)
-          .then(response => NavigationService.navigateToHomeView())
+          .then(NavigationService.navigateToHomeView())
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
