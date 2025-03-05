@@ -11,16 +11,16 @@
       <div class="row justify-content-center">
         <div class="col col-3">
           <div class="input-group mb-3">
-            <input v-model="username" type="text" class="form-control" placeholder="Username">
+            <input v-model="newProfile.username" type="text" class="form-control" placeholder="Username">
           </div>
           <div class="input-group mb-3">
-            <input v-model="password" type="text" class="form-control" placeholder="Password">
+            <input v-model="newProfile.password" type="text" class="form-control" placeholder="Password">
           </div>
           <div class="input-group mb-3">
             <input v-model="password again" type="text" class="form-control" placeholder="Password">
           </div>
           <div class="input-group mb-3">
-            <input v-model="email" type="text" class="form-control" placeholder="Password">
+            <input v-model="newProfile.email" type="text" class="form-control" placeholder="Email">
           </div>
         </div>
 
@@ -35,7 +35,16 @@
 
 <script>
 export default {
-  name: "RegisterView"
+  name: "RegisterView",
+  data() {
+    return {
+      newProfile: {
+        username: '',
+        password: '',
+        email: ''
+      }
+    }
+  },
 }
 </script>
 
