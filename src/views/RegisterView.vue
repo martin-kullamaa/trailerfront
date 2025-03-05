@@ -17,11 +17,14 @@
             <input v-model="newProfile.password" type="text" class="form-control" placeholder="Password">
           </div>
           <div class="input-group mb-3">
-            <input v-model="password again" type="text" class="form-control" placeholder="Password">
+            <input v-model="passwordRetype" type="text" class="form-control" placeholder="Password again">
           </div>
           <div class="input-group mb-3">
             <input v-model="newProfile.email" type="text" class="form-control" placeholder="Email">
           </div>
+
+            <button @click="addNewProfile" type="submit" class="btn btn-info">Create Account</button>
+
         </div>
 
 
@@ -34,10 +37,14 @@
 
 
 <script>
+import ProfileService from "@/service/ProfileService";
+import NavigationService from "@/service/NavigationService";
+
 export default {
   name: "RegisterView",
   data() {
     return {
+      passwordRetype: '',
       newProfile: {
         username: '',
         password: '',
@@ -45,6 +52,16 @@ export default {
       }
     }
   },
+  methods: {
+
+
+    addNewProfile() {
+      ProfileService.sentPostNewProfile(this.newProfile)
+          .then(response => NavigationService.navigateToHomeView())
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+  }
 }
 </script>
 
