@@ -1,5 +1,9 @@
 <template>
-  <div ref="mapContainer" class="map-container"></div>
+  <div
+      ref="mapContainer"
+      class="map-container"
+      :style="{ width: width, height: height }"
+  ></div>
 </template>
 
 <script>
@@ -25,20 +29,27 @@ export default {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19
       }).addTo(this.map)
+    },
+
+    addMarkers() {
+      for (const marker of this.markers) {
+        L.marker([marker.latitude, marker.longitude]).addTo(this.map);
+      }
     }
 
   },
 
   mounted() {
     this.initializeMap()
+    this.addMarkers()
   },
 
 }
 </script>
 
-<style>
-.map-container {
-  width: 80%;
-  height: 720px;
-}
-</style>
+<!--<style>-->
+<!--.map-container {-->
+<!--  width: 80%;-->
+<!--  height: 720px;-->
+<!--}-->
+<!--</style>-->

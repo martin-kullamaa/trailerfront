@@ -25,3 +25,8 @@ nav a {
     text-decoration: none;
 }
 
+.map-container {
+    border: 3px solid #000000; /* Optional - just an example */
+}
+
+
