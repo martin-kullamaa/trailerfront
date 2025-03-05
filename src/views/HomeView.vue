@@ -1,6 +1,12 @@
 <template>
-  <div>
-    <MapComponent :markers="locationStarts"/>
+  <div class="d-flex justify-content-center">
+    <MapComponent
+        :markers="locationStarts"
+        :width="'80%'"
+        :height="'720px'"
+        :center="[58.5983, 25.0136]"
+        :zoom="8"
+    />
   </div>
 </template>
 
