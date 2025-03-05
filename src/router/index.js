@@ -15,7 +15,7 @@ const routes = [
   },
   {
     path: '/home',
-    redirect: '/'   // Optionally, redirect /home to /
+    redirect: '/'
   }
 ]
 
