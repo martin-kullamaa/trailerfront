@@ -14,7 +14,7 @@
             <button @click="login" type="button" class="btn btn-info">Log in</button>
           </div>
           <div>
-            <button type="button" class="btn btn-info">Register</button>
+            <button @click="navigateToRegisterView" type="button" class="btn btn-info">Register</button>
           </div>
         </div>
 
@@ -26,6 +26,7 @@
 <script>
 import axios from "axios";
 import LoginService from "@/service/LoginService";
+import NavigationService from "@/service/NavigationService";
 
 export default {
   name: 'LoginView',
@@ -59,6 +60,10 @@ export default {
           .then(response => this.handleLoginResponse(response))
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
       // this.setSessionStorageProfile();
+    },
+
+    navigateToRegisterView(){
+      NavigationService.navigateToRegisterView()
     },
   }
 }
