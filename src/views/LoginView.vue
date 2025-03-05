@@ -5,10 +5,10 @@
 
         <div class="col col-3">
           <div class="input-group mb-3">
-            <input v-model="username" type="text" class="form-control" placeholder="Username">
+            <input v-model="username" type="text" class="form-control" placeholder="Username" :class="{'is-invalid': showErrors && !username}">
           </div>
           <div class="input-group mb-3">
-            <input v-model="password" type="text" class="form-control" placeholder="Password">
+            <input v-model="password" type="text" class="form-control" placeholder="Password" :class="{'is-invalid': showErrors && !password}">
           </div>
           <div class="mb-3">
             <button @click="login" type="button" class="btn btn-info">Log in</button>
@@ -16,7 +16,6 @@
           <div>
             <button type="button" class="btn btn-info">Register</button>
           </div>
-
         </div>
 
       </div>
@@ -32,6 +31,7 @@ export default {
   name: 'LoginView',
   data() {
     return {
+      showErrors: false,
       username: '',
       password: '',
       loginResponse: {
@@ -42,6 +42,7 @@ export default {
   },
   methods: {
     login() {
+      this.showErrors = true;
       if (this.username.length > 0 && this.password.length > 0) {
         this.sendLoginRequest();
       }
