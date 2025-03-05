@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import LoginService from "@/service/LoginService";
 import NavigationService from "@/service/NavigationService";
 
