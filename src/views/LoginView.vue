@@ -48,10 +48,16 @@ export default {
       }
     },
 
-    handleLoginResponse(response) {
-      this.loginResponse = response.data;
+    updateSessionStorageWithProfileDetails() {
       sessionStorage.setItem('profileId', this.loginResponse.profileId)
       sessionStorage.setItem('roleName', this.loginResponse.roleName)
+    },
+
+    handleLoginResponse(response) {
+      this.loginResponse = response.data;
+      this.updateSessionStorageWithProfileDetails();
+      this.$emit('event-update-nav-menu')
+      NavigationService.navigateToHomeView();
     },
 
     sendLoginRequest() {

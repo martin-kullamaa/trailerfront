@@ -4,7 +4,7 @@
       <router-link to="/">Map</router-link> |
       <router-link to="/login">Log in</router-link>
     </nav>
-    <router-view />
+    <router-view @event-update-nav-menu="updateNavMenu"/>
   </div>
 </template>
 
@@ -19,6 +19,20 @@ onMounted(() => {
   document.body.style.backgroundPosition = 'center'; /* Joondab keskele */
   document.body.style.backgroundColor = 'black'; /* Täidab ülejäänud ala musta värviga */
 });
+
+export default {
+  data() {
+    return {
+      isLoggedIn: false,
+    }
+  },
+  methods: {
+    updateNavMenu() {
+      let profileId = sessionStorage.getItem('profileId')
+      this.isLoggedIn = profileId !== null
+    },
+  }
+}
 </script>
 
 <style>
