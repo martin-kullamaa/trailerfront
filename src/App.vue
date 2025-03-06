@@ -1,6 +1,8 @@
 <template>
+  <AboutModal/>
   <div class="app-content">
     <nav>
+      <router-link to="/">About</router-link> |
       <router-link to="/">Map</router-link> |
       <router-link to="/login">Log in</router-link>
     </nav>
@@ -11,6 +13,8 @@
 <script setup>
 import { onMounted } from 'vue';
 import backgroundImage from '@/assets/background.jpg';
+import Modal from "@/components/modal/Modal.vue";
+import AboutModal from "@/components/modal/AboutModal.vue";
 
 onMounted(() => {
   document.body.style.backgroundImage = `url(${backgroundImage})`;
