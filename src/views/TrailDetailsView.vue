@@ -16,9 +16,9 @@
               <h6>Added Pictures:</h6>
               <div v-for="(pic, index) in trailPictures" :key="index" class="d-flex align-items-center py-2 border-bottom">
                 <!-- Small thumbnail -->
-                <img :src="pic.data" alt="picture" class="img-thumbnail" style="width: 70px; height: 70px; object-fit: cover;">
+                <img :src="pic.data" alt="picture" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
                 <!-- Picture name -->
-                <span class="ms-3 flex-grow-1">{{ pic.name }}</span>
+                <span class="ms-3 flex-grow-1 small">{{ pic.name }}</span>
                 <!-- Remove button -->
                 <button @click="removePicture(index)" class="btn btn-sm btn-danger">Remove</button>
               </div>
