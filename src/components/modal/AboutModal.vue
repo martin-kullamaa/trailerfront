@@ -1,15 +1,14 @@
 <template>
-  <Modal :modalIsOpen="modalIsOpen"
+  <Modal :modal-is-open="modalIsOpen"
          @event-close-modal="$emit('event-close-modal')">
 
     <template #title>About</template>
 
     <template #body>
-      About modali sisu
+      <p>This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.</p>
     </template>
 
     <template #footer>
-      <button @click="$emit('event-close-modal')" class="btn btn-outline-success">Close</button>
     </template>
 
   </Modal>
@@ -19,10 +18,14 @@
 import Modal from "@/components/modal/Modal.vue";
 
 export default {
-  name: "aboutModal",
-  components: { Modal },
+  name: 'AboutModal',
+  components: {Modal},
   props: {
     modalIsOpen: Boolean
+  },
+  methods:{
+
   }
-};
+}
 </script>
+
