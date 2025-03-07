@@ -5,7 +5,8 @@
     <template #title>About</template>
 
     <template #body>
-      <p>This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.This is the About modal content.</p>
+      <img src="../../assets/LOGO.png" height="110" width="110"/>
+      <p>This is a hiking and adventure planning website for travel enthusiasts and explorers. The trails available here can be completed on foot, by bicycle, or by motorcycle. You can add and share your own trips or find inspiration for your next adventure. Click on the starting points on the map to explore hikes, or log in to add your completed routes with detailed descriptions.</p>
     </template>
 
     <template #footer>
