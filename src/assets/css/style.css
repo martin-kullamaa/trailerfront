@@ -1,3 +1,6 @@
+.transparent-card {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}
 
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
