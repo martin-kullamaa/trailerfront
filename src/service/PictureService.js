@@ -17,4 +17,12 @@ export default {
         );
     },
 
+    sendDeletePictureRequest(trailId, pictureName) {
+        return axios.delete('/picture', {
+            params: {
+                trailId: trailId,
+                pictureName: pictureName
+            }
+        });
+    }
 }

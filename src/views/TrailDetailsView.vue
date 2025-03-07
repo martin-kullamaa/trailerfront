@@ -25,7 +25,6 @@
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn-primary mt-3" @click="saveTrailPictures">Save</button>
       </div>
     </div>
 
@@ -98,8 +97,26 @@ export default {
             console.error("Error saving picture:", error)
           });
     },
+
+    deletePicture() {
+      axios.delete('/picture', {
+            params: {
+              trailId: this.trailId,
+              someRequestParam2: this.someDataBlockVariable2
+            }
+          }
+      ).then(response => {
+        this.someDataBlockResponseObject = response.data
+      }).catch(error => {
+        this.someDataBlockErrorResponseObject = error.response.data
+      })
+    },
+
     removePicture(index) {
-      this.trailPictures.splice(index, 1)
+      const pic = this.trailPictures[index];
+      PictureService.sendDeletePictureRequest(this.trailId, pic.name)
+          .then(() => this.trailPictures.splice(index, 1))
+          .catch(error => console.error("Error deleting picture:", error))
     },
 
     getTrailPictures() {
@@ -108,10 +125,9 @@ export default {
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
-
   },
   beforeMount() {
-
+    this.getTrailPictures()
   }
 }
 </script>
