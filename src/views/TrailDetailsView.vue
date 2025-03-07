@@ -5,10 +5,27 @@
       <div class="card transparent-card">
         <div class="card-body">
           <h5 class="card-title">Pictures</h5>
-          <ImageInput @event-new-picture-selected="setPictureData"/>
-          <TrailPicture :picture-data="trailPicture"/>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <TrailPicture :picture-data="currentPicture.data"
+                        @event-new-picture-selected="setPictureData"
+          />
+          <input v-model="currentPicture.name" type="text" class="form-control mt-2 w-50 mx-auto" placeholder="Picture title"
+                 :class="{'is-invalid': showErrors && !currentPicture.name.trim()}">
+          <button type="button" class="btn btn-primary mt-2 w-50" @click="addPicture">Add picture</button>
+          <div v-if="trailPictures.length > 0" class="mt-3">
+            <div class="container">
+              <h6>Added Pictures:</h6>
+              <div v-for="(pic, index) in trailPictures" :key="index" class="d-flex align-items-center py-2 border-bottom">
+                <!-- Small thumbnail -->
+                <img :src="pic.data" alt="picture" class="img-thumbnail" style="width: 70px; height: 70px; object-fit: cover;">
+                <!-- Picture name -->
+                <span class="ms-3 flex-grow-1">{{ pic.name }}</span>
+                <!-- Remove button -->
+                <button @click="removePicture(index)" class="btn btn-sm btn-danger">Remove</button>
+              </div>
+            </div>
+          </div>
         </div>
+        <button type="button" class="btn btn-primary mt-3" @click="saveTrailPictures">Save</button>
       </div>
     </div>
 
@@ -16,7 +33,7 @@
       <div class="card transparent-card">
         <div class="card-body">
           <h5 class="card-title">Equipment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <p class="card-text">SOMETHING.</p>
           <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
       </div>
@@ -26,7 +43,7 @@
       <div class="card transparent-card">
         <div class="card-body">
           <h5 class="card-title">Type</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <p class="card-text">SOMETHING</p>
           <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
       </div>
@@ -38,25 +55,61 @@
 <script>
 import ImageInput from "@/components/ImageInput.vue";
 import TrailPicture from "@/components/TrailPicture.vue";
+import PictureService from "@/service/PictureService";
 
 export default {
   name: "TrailDetailsView",
   components: {TrailPicture, ImageInput},
   data() {
     return {
-      trailPicture: ''
+      showErrors: false,
+      trailId: 0,
+      currentPicture: {
+        data: '',
+        name: ''
+      },
+      trailPictures: []
     }
   },
   methods: {
-    setPictureData(pictureData){
-      this.trailPicture = pictureData
-    }
+
+    setPictureData(pictureData) {
+      this.currentPicture.data = pictureData;
+    },
+
+    addPicture() {
+      // Validate that both the image and title are provided
+      if (!this.currentPicture.data || !this.currentPicture.name.trim()) {
+        this.showErrors = true;
+        return;
+      }
+      // Push a copy of the currentPicture into the array
+      this.trailPictures.push({ ...this.currentPicture });
+      // Reset the current picture so the user can add another one
+      this.currentPicture = { data: '', name: '' };
+      this.showErrors = false;
+    },
+    removePicture(index) {
+      this.trailPictures.splice(index, 1);
+    },
+
+    getTrailPictures() {
+      PictureService.sendGetPicturesRequest(this.trailId)
+          .then(response => this.trailPictures = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+
+
+    saveTrailPictures() {
+      PictureService.sendPostPictureRequest(this.trailId, this.trailPictures)
+          .then(response => this.someDataBlockResponseObject = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+  },
+  beforeMount() {
+
   }
 }
 </script>
-
-<style>
-.card {
-  background-color: rgba(255, 255, 255, 0.8);
-}
-</style>
