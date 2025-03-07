@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from "@/views/LoginView.vue";
 import HomeView from "@/views/HomeView.vue";
 import RegisterView from "@/views/RegisterView.vue";
-import TrailView from "@/views/TrailView.vue";
+import NewTrailView from "@/views/NewTrailView.vue";
+
 
 const routes = [
   {
@@ -25,9 +26,9 @@ const routes = [
     component: RegisterView
   },
   {
-    path: '/trail',
-    name: 'trailRoute',
-    component: TrailView
+    path: '/newtrail',
+    name: 'newtrailRoute',
+    component: NewTrailView
   }
 ]
 

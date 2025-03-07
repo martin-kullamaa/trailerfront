@@ -11,7 +11,7 @@
             <input v-model="password" type="text" class="form-control" placeholder="Password" :class="{'is-invalid': showErrors && !password}">
           </div>
           <div class="mb-3">
-            <button @click="login" type="button" class="btn btn-info">Log in</button>
+            <button @click="login" type="submit" class="btn btn-info">Log in</button>
           </div>
           <div>
             <button @click="navigateToRegisterView" type="button" class="btn btn-info">Register</button>
@@ -48,16 +48,10 @@ export default {
       }
     },
 
+
     updateSessionStorageWithProfileDetails() {
       sessionStorage.setItem('profileId', this.loginResponse.profileId)
       sessionStorage.setItem('roleName', this.loginResponse.roleName)
-    },
-
-    handleLoginResponse(response) {
-      this.loginResponse = response.data;
-      this.updateSessionStorageWithProfileDetails();
-      this.$emit('event-update-nav-menu')
-      NavigationService.navigateToHomeView();
     },
 
     sendLoginRequest() {
@@ -65,6 +59,13 @@ export default {
           .then(response => this.handleLoginResponse(response))
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
       // this.setSessionStorageProfile();
+    },
+
+    handleLoginResponse(response) {
+      this.loginResponse = response.data;
+      this.updateSessionStorageWithProfileDetails();
+      this.$emit('event-update-nav-menu')
+      NavigationService.navigateToHomeView();
     },
 
     navigateToRegisterView(){

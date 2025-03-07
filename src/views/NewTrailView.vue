@@ -21,6 +21,6 @@
 
 <script>
 export default {
-  name: "TrailView"
+  name: "NewTrailView"
 }
 </script>
