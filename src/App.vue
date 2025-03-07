@@ -2,9 +2,20 @@
   <div class="app-content">
     <nav>
       <router-link to="/">Map</router-link> |
-      <router-link to="/login">Log in</router-link>
+
+
+      <template v-if="isLoggedIn">
+        <router-link to="/newtrail">Add New Trail</router-link> |
+        <button type="button" class="btn btn-success">Log out</button>
+      </template>
+
+      <template v-else>
+        <router-link to="/login">Log in</router-link>
+      </template>
+
+      <router-view @event-update-nav-menu="updateNavMenu"/>
     </nav>
-    <router-view @event-update-nav-menu="updateNavMenu"/>
+
   </div>
 </template>
 

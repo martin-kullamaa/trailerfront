@@ -13,6 +13,7 @@
 <script>
 import LocationService from "@/service/LocationService";
 import MapComponent from "@/components/MapComponent.vue";
+import NavigationService from "@/service/NavigationService";
 
 export default {
   name: "HomeView",
@@ -33,6 +34,10 @@ export default {
           .then(response => this.locationStarts = response.data)
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
+
+    navigateToNewTrailView() {
+      NavigationService.navigateToNewTrailView()
+    }
 
   },
   beforeMount() {
