@@ -8,29 +8,28 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import { onMounted } from 'vue';
 import backgroundImage from '@/assets/background.jpg';
-
-onMounted(() => {
-  document.body.style.backgroundImage = `url(${backgroundImage})`;
-  document.body.style.backgroundSize = '100% 100%'; /* Venitab täpselt servadeni */
-  document.body.style.backgroundRepeat = 'no-repeat'; /* Väldib kordamist */
-  document.body.style.backgroundPosition = 'center'; /* Joondab keskele */
-  document.body.style.backgroundColor = 'black'; /* Täidab ülejäänud ala musta värviga */
-});
 
 export default {
   data() {
     return {
-      isLoggedIn: false,
+      isLoggedIn: false
     }
   },
   methods: {
     updateNavMenu() {
-      let profileId = sessionStorage.getItem('profileId')
-      this.isLoggedIn = profileId !== null
-    },
+      let profileId = sessionStorage.getItem('profileId');
+      this.isLoggedIn = profileId !== null;
+    }
+  },
+  mounted() {
+    document.body.style.backgroundImage = `url(${backgroundImage})`;
+    document.body.style.backgroundSize = '100% 100%'; // Venitab täpselt servadeni
+    document.body.style.backgroundRepeat = 'no-repeat'; // Väldib kordamist
+    document.body.style.backgroundPosition = 'center'; // Joondab keskele
+    document.body.style.backgroundColor = 'black'; // Täidab ülejäänud ala musta värviga
   }
 }
 </script>
