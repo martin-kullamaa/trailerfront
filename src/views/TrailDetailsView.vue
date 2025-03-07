@@ -53,17 +53,17 @@
 </template>
 
 <script>
-import ImageInput from "@/components/ImageInput.vue";
 import TrailPicture from "@/components/TrailPicture.vue";
 import PictureService from "@/service/PictureService";
 
 export default {
   name: "TrailDetailsView",
-  components: {TrailPicture, ImageInput},
+  components: {TrailPicture},
   data() {
     return {
       showErrors: false,
-      trailId: 0,
+      // todo: trailId needs to be emitted from NewTrailView
+      trailId: 1,
       currentPicture: {
         data: '',
         name: ''
@@ -78,19 +78,28 @@ export default {
     },
 
     addPicture() {
-      // Validate that both the image and title are provided
       if (!this.currentPicture.data || !this.currentPicture.name.trim()) {
         this.showErrors = true;
         return;
       }
-      // Push a copy of the currentPicture into the array
-      this.trailPictures.push({ ...this.currentPicture });
-      // Reset the current picture so the user can add another one
-      this.currentPicture = { data: '', name: '' };
-      this.showErrors = false;
+
+      const pictureDto = {
+        data: this.currentPicture.data,
+        name: this.currentPicture.name
+      }
+
+      PictureService.sendPostPictureRequest(this.trailId, pictureDto)
+          .then(() => {
+            this.getTrailPictures()
+            this.currentPicture = { data: '', name: '' }
+            this.showErrors = false
+          })
+          .catch(error => {
+            console.error("Error saving picture:", error)
+          });
     },
     removePicture(index) {
-      this.trailPictures.splice(index, 1);
+      this.trailPictures.splice(index, 1)
     },
 
     getTrailPictures() {
@@ -99,13 +108,6 @@ export default {
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
-
-
-    saveTrailPictures() {
-      PictureService.sendPostPictureRequest(this.trailId, this.trailPictures)
-          .then(response => this.someDataBlockResponseObject = response.data)
-          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
-    },
 
   },
   beforeMount() {
