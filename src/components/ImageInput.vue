@@ -14,7 +14,9 @@ export default {
     }
   },
   methods: {
+
     handleImage(event) {
+      console.log("olen siin")
       const selectedImage = event.target.files[0];
       this.emitBase64(selectedImage);
     },

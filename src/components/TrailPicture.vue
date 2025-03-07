@@ -1,13 +1,13 @@
 <template>
   <div>
     <!-- Use a condition to check if PictureData is empty -->
-    <img v-if="!PictureData || PictureData.trim() === ''"
-         src="https://placehold.co/600x400"
+    <img v-if="!pictureData || pictureData.trim() === ''"
+         src="https://placehold.co/200"
          class="img-thumbnail"
          alt="placeholder image">
     <img v-else
-         :src="PictureData"
-         class="img-thumbnail"
+         :src="pictureData"
+         class="img-thumbnail fixed-size"
          alt="selected image">
   </div>
 </template>
@@ -16,7 +16,7 @@
 export default {
   name: 'TrailPicture',
   props: {
-    PictureData: {
+    pictureData: {
       type: String,
       default: ''
     }
