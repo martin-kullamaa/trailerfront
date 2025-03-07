@@ -18,7 +18,7 @@ import backgroundImage from '@/assets/background.jpg';
 import AboutModal from "@/components/modal/AboutModal.vue";
 
 // Modaali avamise/sulgemise seisund
-const modalIsOpen = ref(true);
+const modalIsOpen = ref(false);
 
 const openAboutModal = () => {
   modalIsOpen.value = true;
