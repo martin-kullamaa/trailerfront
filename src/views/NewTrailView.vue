@@ -14,15 +14,22 @@
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Description</textarea>
           </div>
 
-          <div class="input-group mb-3">
-            <label for="length" class="form-label text-start d-block">1</label>
-            <input type="text" class="form-control" id="length" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-            <span class="input-group-text" id="basic-addon1">km</span>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label text-start d-block">Trail length (km)</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Trail length (km)">
           </div>
 
         </div>
         <div class="col">
-          Column
+          <div class="d-flex justify-content-center">
+            <MapComponent
+                :markers="locationStarts"
+                :width="'80%'"
+                :height="'720px'"
+                :center="[58.5983, 25.0136]"
+                :zoom="8"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -33,10 +40,34 @@
 
 
 <script>
+import MapComponent from "@/components/MapComponent.vue";
+
 export default {
   name: "NewTrailView",
+  components: {MapComponent},
+  data() {
+    return {
+      newTrail: {
+        profileId: 0,
+        trailName: "string",
+        trailDescription: "string",
+        trailLength: 0,
+        startName: "string",
+        startLatitude: 0,
+        startLongitude: 0,
+        locationStopDtos: [
+          {
+            latitude: 0,
+            longitude: 0,
+            sequence: 0
+          }
+        ]
+      }
+    }
+  },
   methods: {
     addNewTrail() {
+
 
     }
   }
