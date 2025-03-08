@@ -11,10 +11,10 @@
             <input v-model="password" type="text" class="form-control" placeholder="Password" :class="{'is-invalid': showErrors && !password}">
           </div>
           <div class="mb-3">
-            <button @click="login" type="submit" class="btn btn-info">Log in</button>
+            <button @click="login" type="submit" class="btn btn-info w-50">Log in</button>
           </div>
           <div>
-            <button @click="navigateToRegisterView" type="button" class="btn btn-info">Register</button>
+            <button @click="navigateToRegisterView" type="button" class="btn btn-info w-50">Register</button>
           </div>
         </div>
 

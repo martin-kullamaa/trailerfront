@@ -10,7 +10,7 @@
           />
           <input v-model="currentPicture.name" type="text" class="form-control mt-2 w-50 mx-auto" placeholder="Picture title"
                  :class="{'is-invalid': showErrors && !currentPicture.name.trim()}">
-          <button type="button" class="btn btn-primary mt-2 w-50" @click="addPicture">Add picture</button>
+          <button type="button" class="btn btn-info mt-2 w-50" @click="addPicture">Add picture</button>
           <div v-if="trailPictures.length > 0" class="mt-3">
             <div class="container">
               <h6>Added Pictures:</h6>
@@ -20,7 +20,7 @@
                 <!-- Picture name -->
                 <span class="ms-3 flex-grow-1 small">{{ pic.name }}</span>
                 <!-- Remove button -->
-                <button @click="removePicture(index)" class="btn btn-sm btn-danger">Remove</button>
+                <button @click="removePicture(index)" class="btn btn-sm btn-outline-danger">Remove</button>
               </div>
             </div>
           </div>
