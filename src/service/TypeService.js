@@ -7,7 +7,7 @@ export default {
 
     // move this to trailService
     sendGetTrailTypeRequest(trailId) {
-        return axios.get('/trail', {
+        return axios.get('/trail/type', {
                 params: {
                     trailId: trailId
                 }

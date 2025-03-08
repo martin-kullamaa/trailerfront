@@ -3,7 +3,8 @@
 
     <div class="col-sm-3 mb-3 mb-sm-0">
       <div class="card transparent-card">
-        <div class="card-body mb-3">
+
+        <div class="card-body ">
           <TrailPicture :picture-data="currentPicture.data" @event-new-picture-selected="setPictureData"/>
           <!--          todo: add character limit to pic name-->
           <input v-model="currentPicture.name" type="text" class="form-control mt-2 w-50 mx-auto"
@@ -12,15 +13,12 @@
           <button type="button" class="btn btn-success mt-2 w-50" @click="addPicture">Add picture</button>
         </div>
 
-        <div class="card-body mb-3">
+        <div class="card-body ">
           <div class="dropdown">
-            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-              Add type
-            </button>
+            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown">Add type</button>
             <ul class="dropdown-menu custom-dropdown w-50">
               <li v-for="currentType in types">
-                <a class="dropdown-item" href="#">{{ currentType.name }}</a>
+                <a @click="addTypeToTrail()" class="dropdown-item" href="#">{{ currentType.name }}</a>
               </li>
             </ul>
           </div>
@@ -39,6 +37,7 @@
             </ul>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -94,6 +93,7 @@ export default {
     return {
       showErrors: false,
       // todo: trailId needs to be emitted from NewTrailView
+      // todo: also emit trailName here and incorporate it on the cards
       trailId: 1,
       currentPicture: {
         data: '',
@@ -187,6 +187,10 @@ export default {
         default:
           return ['fas', 'question-circle'];
       }
+    },
+
+    addTypeToTrail() {
+
     }
 
   },
