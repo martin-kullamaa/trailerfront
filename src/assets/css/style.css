@@ -4,6 +4,12 @@
 /*    !* Optionally, you can also remove any padding if needed *!*/
 /*}*/
 
+
+.trash-icon {
+    font-size: 1rem;  /* Adjust this value to make the icon smaller */
+    margin-left: 0.5rem; /* optional: add space between the icons */
+}
+
 .custom-dropdown {
     width: 50% !important; /* force dropdown to be 50% wide */
     min-width: 0 !important; /* override Bootstrap's min-width */

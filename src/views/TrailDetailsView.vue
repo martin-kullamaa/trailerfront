@@ -5,20 +5,22 @@
       <div class="card transparent-card">
         <div class="card-body mb-3">
           <TrailPicture :picture-data="currentPicture.data" @event-new-picture-selected="setPictureData"/>
-<!--          todo: add character limit to pic name-->
-          <input v-model="currentPicture.name" type="text" class="form-control mt-2 w-50 mx-auto" placeholder="Picture title"
+          <!--          todo: add character limit to pic name-->
+          <input v-model="currentPicture.name" type="text" class="form-control mt-2 w-50 mx-auto"
+                 placeholder="Picture title"
                  :class="{'is-invalid': showErrors && !currentPicture.name.trim()}">
           <button type="button" class="btn btn-success mt-2 w-50" @click="addPicture">Add picture</button>
         </div>
 
         <div class="card-body mb-3">
           <div class="dropdown">
-            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
               Add type
             </button>
             <ul class="dropdown-menu custom-dropdown w-50">
               <li v-for="currentType in types">
-                <a class="dropdown-item" href="#">{{currentType.name}}</a>
+                <a class="dropdown-item" href="#">{{ currentType.name }}</a>
               </li>
             </ul>
           </div>
@@ -26,7 +28,8 @@
 
         <div class="card-body">
           <div class="dropdown">
-            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
               Add equipment
             </button>
             <ul class="dropdown-menu custom-dropdown w-50">
@@ -43,10 +46,12 @@
       <div class="card transparent-card mb-3">
         <div v-if="trailPictures.length > 0" class="mt-3">
           <div class="container">
-            <h6>Added Pictures:</h6>
-            <div v-for="(pic, index) in trailPictures" :key="index" class="d-flex align-items-center py-2 border-bottom">
+            <h6>Added pictures:</h6>
+            <div v-for="(pic, index) in trailPictures" :key="index"
+                 class="d-flex align-items-center py-2 border-bottom">
               <!-- Small thumbnail -->
-              <img :src="pic.data" alt="picture" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+              <img :src="pic.data" alt="picture" class="img-thumbnail"
+                   style="width: 100px; height: 100px; object-fit: cover;">
               <!-- Picture name -->
               <span class="ms-3 flex-grow-1 small">{{ pic.name }}</span>
               <!-- Remove button -->
@@ -56,12 +61,22 @@
         </div>
       </div>
       <div class="card transparent-card">
-
+        <h6>Added type(s):</h6>
+        <div class="container text-center">
+          <div class="row">
+            <div class="col" v-for="trailType in trailTypes" :key="trailType.typeId">
+              <div>
+                <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon" />
+                <font-awesome-icon icon="trash" class="trash-icon pointer" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-<!--    <div class="col-sm-3">-->
-<!--    </div>-->
+    <!--    <div class="col-sm-3">-->
+    <!--    </div>-->
 
   </div>
 </template>
@@ -94,7 +109,8 @@ export default {
         id: 0,
         name: ''
       },
-      types: []
+      types: [],
+      trailTypes: []
     }
   },
   methods: {
@@ -117,7 +133,7 @@ export default {
       PictureService.sendPostPictureRequest(this.trailId, pictureDto)
           .then(() => {
             this.getTrailPictures()
-            this.currentPicture = { data: '', name: '' }
+            this.currentPicture = {data: '', name: ''}
             this.showErrors = false
           })
           .catch(error => {
@@ -139,13 +155,11 @@ export default {
     },
 
 
-
     getEquipment() {
       EquipmentService.sendGetEquipmentRequest()
           .then(response => this.equipment = response.data)
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
-
 
 
     getTypes() {
@@ -154,11 +168,33 @@ export default {
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
+
+    getTrailTypes() {
+      TypeService.sendGetTrailTypeRequest(this.trailId)
+          .then(response => this.trailTypes = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+    getTypeIcon(typeId) {
+      const id = Number(typeId);
+      switch (id) {
+        case 1:
+          return ['fas', 'person-hiking'];
+        case 2:
+          return ['fas', 'bicycle'];
+        case 3:
+          return ['fas', 'motorcycle'];
+        default:
+          return ['fas', 'question-circle'];
+      }
+    }
+
   },
   beforeMount() {
     this.getTrailPictures()
     this.getEquipment()
     this.getTypes()
+    this.getTrailTypes()
   }
 }
 </script>
