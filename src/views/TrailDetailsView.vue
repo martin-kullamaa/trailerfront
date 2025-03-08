@@ -4,10 +4,7 @@
     <div class="col-sm-3 mb-3 mb-sm-0">
       <div class="card transparent-card">
         <div class="card-body">
-          <h5 class="card-title">Pictures</h5>
-          <TrailPicture :picture-data="currentPicture.data"
-                        @event-new-picture-selected="setPictureData"
-          />
+          <TrailPicture :picture-data="currentPicture.data" @event-new-picture-selected="setPictureData"/>
           <input v-model="currentPicture.name" type="text" class="form-control mt-2 w-50 mx-auto" placeholder="Picture title"
                  :class="{'is-invalid': showErrors && !currentPicture.name.trim()}">
           <button type="button" class="btn btn-info mt-2 w-50" @click="addPicture">Add picture</button>
@@ -31,9 +28,14 @@
     <div class="col-sm-3">
       <div class="card transparent-card">
         <div class="card-body">
-          <h5 class="card-title">Equipment</h5>
-          <p class="card-text">SOMETHING.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="dropdown">
+            <button class="btn btn-secondary btn-info btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Choose equipment
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
