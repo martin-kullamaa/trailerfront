@@ -14,4 +14,14 @@ export default {
             }
         );
     },
+
+    sendPostTrailTypeRequest(trailId, typeId) {
+        return axios.post('/trail/type', null, {
+                params: {
+                    trailId: trailId,
+                    typeId: typeId
+                }
+            }
+        );
+    },
 }

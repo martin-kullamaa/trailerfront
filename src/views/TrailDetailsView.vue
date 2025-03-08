@@ -18,7 +18,7 @@
             <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown">Add type</button>
             <ul class="dropdown-menu custom-dropdown w-50">
               <li v-for="currentType in types">
-                <a @click="addTypeToTrail()" class="dropdown-item" href="#">{{ currentType.name }}</a>
+                <a @click="addTrailType(currentType)" class="dropdown-item" href="#">{{ currentType.name }}</a>
               </li>
             </ul>
           </div>
@@ -106,7 +106,7 @@ export default {
       },
       equipment: [],
       currentType: {
-        id: 0,
+        typeId: 0,
         name: ''
       },
       types: [],
@@ -189,9 +189,13 @@ export default {
       }
     },
 
-    addTypeToTrail() {
-
-    }
+    addTrailType(currentType) {
+      console.log("Selected type object:", currentType);
+      this.currentType = currentType
+      TypeService.sendPostTrailTypeRequest(this.trailId, this.currentType.typeId)
+          .then(() => this.getTrailTypes(this.trailId))
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
 
   },
   beforeMount() {
