@@ -3,37 +3,36 @@
 
     <div class="col-sm-3 mb-3 mb-sm-0">
       <div class="card transparent-card">
-        <div class="card-body">
+        <div class="card-body mb-3">
           <TrailPicture :picture-data="currentPicture.data" @event-new-picture-selected="setPictureData"/>
+<!--          todo: add character limit to pic name-->
           <input v-model="currentPicture.name" type="text" class="form-control mt-2 w-50 mx-auto" placeholder="Picture title"
                  :class="{'is-invalid': showErrors && !currentPicture.name.trim()}">
-          <button type="button" class="btn btn-info mt-2 w-50" @click="addPicture">Add picture</button>
-          <div v-if="trailPictures.length > 0" class="mt-3">
-            <div class="container">
-              <h6>Added Pictures:</h6>
-              <div v-for="(pic, index) in trailPictures" :key="index" class="d-flex align-items-center py-2 border-bottom">
-                <!-- Small thumbnail -->
-                <img :src="pic.data" alt="picture" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
-                <!-- Picture name -->
-                <span class="ms-3 flex-grow-1 small">{{ pic.name }}</span>
-                <!-- Remove button -->
-                <button @click="removePicture(index)" class="btn btn-sm btn-outline-danger">Remove</button>
-              </div>
-            </div>
+          <button type="button" class="btn btn-success mt-2 w-50" @click="addPicture">Add picture</button>
+        </div>
+
+        <div class="card-body mb-3">
+          <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Add type
+            </button>
+            <ul class="dropdown-menu custom-dropdown w-50">
+              <li v-for="currentType in types">
+                <a class="dropdown-item" href="#">{{currentType.name}}</a>
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="col-sm-3">
-      <div class="card transparent-card">
         <div class="card-body">
           <div class="dropdown">
-            <button class="btn btn-secondary btn-info btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Choose equipment
+            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Add equipment
             </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
+            <ul class="dropdown-menu custom-dropdown w-50">
+              <li v-for="currentEquipment in equipment" :key="currentEquipment.id">
+                <a class="dropdown-item" href="#">{{ currentEquipment.name }}</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -41,14 +40,28 @@
     </div>
 
     <div class="col-sm-3">
-      <div class="card transparent-card">
-        <div class="card-body">
-          <h5 class="card-title">Type</h5>
-          <p class="card-text">SOMETHING</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+      <div class="card transparent-card mb-3">
+        <div v-if="trailPictures.length > 0" class="mt-3">
+          <div class="container">
+            <h6>Added Pictures:</h6>
+            <div v-for="(pic, index) in trailPictures" :key="index" class="d-flex align-items-center py-2 border-bottom">
+              <!-- Small thumbnail -->
+              <img :src="pic.data" alt="picture" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+              <!-- Picture name -->
+              <span class="ms-3 flex-grow-1 small">{{ pic.name }}</span>
+              <!-- Remove button -->
+              <button @click="removePicture(index)" class="btn btn-sm btn-outline-danger">Remove</button>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="card transparent-card">
+
+      </div>
     </div>
+
+<!--    <div class="col-sm-3">-->
+<!--    </div>-->
 
   </div>
 </template>
@@ -56,6 +69,8 @@
 <script>
 import TrailPicture from "@/components/TrailPicture.vue";
 import PictureService from "@/service/PictureService";
+import EquipmentService from "@/service/EquipmentService";
+import TypeService from "@/service/TypeService";
 
 export default {
   name: "TrailDetailsView",
@@ -69,7 +84,17 @@ export default {
         data: '',
         name: ''
       },
-      trailPictures: []
+      trailPictures: [],
+      currentEquipment: {
+        id: 0,
+        name: ''
+      },
+      equipment: [],
+      currentType: {
+        id: 0,
+        name: ''
+      },
+      types: []
     }
   },
   methods: {
@@ -100,20 +125,6 @@ export default {
           });
     },
 
-    deletePicture() {
-      axios.delete('/picture', {
-            params: {
-              trailId: this.trailId,
-              someRequestParam2: this.someDataBlockVariable2
-            }
-          }
-      ).then(response => {
-        this.someDataBlockResponseObject = response.data
-      }).catch(error => {
-        this.someDataBlockErrorResponseObject = error.response.data
-      })
-    },
-
     removePicture(index) {
       const pic = this.trailPictures[index];
       PictureService.sendDeletePictureRequest(this.trailId, pic.name)
@@ -127,9 +138,27 @@ export default {
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
+
+
+    getEquipment() {
+      EquipmentService.sendGetEquipmentRequest()
+          .then(response => this.equipment = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+
+
+    getTypes() {
+      TypeService.sendGetTypesRequest()
+          .then(response => this.types = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
   },
   beforeMount() {
     this.getTrailPictures()
+    this.getEquipment()
+    this.getTypes()
   }
 }
 </script>

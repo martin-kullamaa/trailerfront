@@ -1,3 +1,14 @@
+/*.custom-dropdown {*/
+/*    min-width: 100% !important; !* ensures it’s at least as wide as its parent *!*/
+/*    background-color: #17a2b8 !important; !* desired background *!*/
+/*    !* Optionally, you can also remove any padding if needed *!*/
+/*}*/
+
+.custom-dropdown {
+    width: 50% !important; /* force dropdown to be 50% wide */
+    min-width: 0 !important; /* override Bootstrap's min-width */
+}
+
 
 .transparent-card {
     background-color: rgba(255, 255, 255, 0.8) !important;
