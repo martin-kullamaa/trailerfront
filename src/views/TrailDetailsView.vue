@@ -43,9 +43,9 @@
 
     <div class="col-sm-3">
       <div class="card transparent-card mb-3">
+        <h6 class="mt-2">Added picture(s):</h6>
         <div v-if="trailPictures.length > 0" class="mt-3">
           <div class="container">
-            <h6>Added pictures:</h6>
             <div v-for="(pic, index) in trailPictures" :key="index"
                  class="d-flex align-items-center py-2 border-bottom">
               <!-- Small thumbnail -->
@@ -60,13 +60,13 @@
         </div>
       </div>
       <div class="card transparent-card">
-        <h6>Added type(s):</h6>
+        <h6 class="mt-2">Added type(s):</h6>
         <div class="container text-center">
           <div class="row">
             <div class="col" v-for="trailType in trailTypes" :key="trailType.typeId">
               <div>
                 <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon" />
-                <font-awesome-icon icon="trash" class="trash-icon pointer" />
+                <font-awesome-icon @click="deleteTrailType(trailType.typeId)" icon="trash" class="trash-icon pointer" />
               </div>
             </div>
           </div>
@@ -189,14 +189,21 @@ export default {
       }
     },
 
+    // todo: add error handling = can't choose type that's already chose
     addTrailType(currentType) {
-      console.log("Selected type object:", currentType);
       this.currentType = currentType
       TypeService.sendPostTrailTypeRequest(this.trailId, this.currentType.typeId)
           .then(() => this.getTrailTypes(this.trailId))
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
+
+
+    deleteTrailType(typeId) {
+      TypeService.sendDeleteTrailTypeRequest(this.trailId, typeId)
+          .then(() => this.getTrailTypes(this.trailId))
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
   },
   beforeMount() {
     this.getTrailPictures()
