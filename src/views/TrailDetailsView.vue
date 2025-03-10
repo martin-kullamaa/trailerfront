@@ -3,7 +3,6 @@
 
     <div class="col-sm-3 mb-3 mb-sm-0">
       <div class="card transparent-card">
-
         <div class="card-body ">
           <TrailPicture :picture-data="currentPicture.data" @event-new-picture-selected="setPictureData"/>
           <!--          todo: add character limit to pic name-->
@@ -15,7 +14,8 @@
 
         <div class="card-body ">
           <div class="dropdown">
-            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown">Add type</button>
+            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown">Add type
+            </button>
             <ul class="dropdown-menu custom-dropdown w-50">
               <li v-for="currentType in types">
                 <a @click="addTrailType(currentType)" class="dropdown-item" href="#">{{ currentType.name }}</a>
@@ -48,34 +48,40 @@
           <div class="container">
             <div v-for="(pic, index) in trailPictures" :key="index"
                  class="d-flex align-items-center py-2 border-bottom">
-              <!-- Small thumbnail -->
+
               <img :src="pic.data" alt="picture" class="img-thumbnail"
                    style="width: 100px; height: 100px; object-fit: cover;">
-              <!-- Picture name -->
+
               <span class="ms-3 flex-grow-1 small">{{ pic.name }}</span>
-              <!-- Remove button -->
+
               <button @click="removePicture(index)" class="btn btn-sm btn-outline-danger">Remove</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card transparent-card">
-        <h6 class="mt-2">Added type(s):</h6>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col" v-for="trailType in trailTypes" :key="trailType.typeId">
-              <div>
-                <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon" />
-                <font-awesome-icon @click="deleteTrailType(trailType.typeId)" icon="trash" class="trash-icon pointer" />
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!--    <div class="col-sm-3">-->
-    <!--    </div>-->
+    <div class="col-sm-3">
+      <div class="card transparent-card mb-3">
+        <h6 class="mt-2">Added type(s):</h6>
+        <div class="container text-center">
+          <div class="row">
+            <div class="col" v-for="trailType in trailTypes" :key="trailType.typeId">
+              <div>
+                <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon"/>
+                <font-awesome-icon @click="deleteTrailType(trailType.typeId)" icon="trash" class="trash-icon pointer"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card transparent-card">
+        <h6 class="mt-2">Added equipment:</h6>
+        <div class="card-body">
+          <span class="badge text-bg-success custom-badge pointer me-3">saapad</span>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -105,12 +111,13 @@ export default {
         name: ''
       },
       equipment: [],
+      trailEquipment: [],
+      types: [],
+      trailTypes: [],
       currentType: {
         typeId: 0,
         name: ''
       },
-      types: [],
-      trailTypes: []
     }
   },
   methods: {
@@ -196,7 +203,6 @@ export default {
           .then(() => this.getTrailTypes(this.trailId))
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
-
 
 
     deleteTrailType(typeId) {

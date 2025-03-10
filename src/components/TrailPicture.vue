@@ -8,7 +8,6 @@
         accept="image/x-png,image/jpeg,image/gif"
         style="display: none;"
     />
-    <!-- Clickable image (placeholder or selected image) -->
     <img
         v-if="!pictureData || pictureData.trim() === ''"
         :src="placeholder"

@@ -4,6 +4,11 @@
 /*    !* Optionally, you can also remove any padding if needed *!*/
 /*}*/
 
+.custom-badge {
+    font-size: 1rem !important;  /* Adjust font size as needed */
+    padding: 0.4rem 0.6rem !important;  /* Reduce padding */
+    border-radius: 0.5rem !important;  /* Optional: adjust border radius if desired */
+}
 
 .trash-icon {
     font-size: 1rem;  /* Adjust this value to make the icon smaller */
