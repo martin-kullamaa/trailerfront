@@ -1,5 +1,9 @@
 <template>
-  <AboutModal :modal-is-open="modalIsOpen" @event-close-modal="closeModal" />
+  <AboutModal :modal-is-open="aboutModalIsOpen" @event-close-modal="closeAboutModal" />
+  <LogOutModal :modal-is-open="logOutModalIsOpen"
+               @event-close-modal="closeLogOutModal"
+               @event-execute-log-out="executeLogOut"
+  />
 
   <div class="app-content">
     <nav>
@@ -10,7 +14,7 @@
 
       <template v-if="isLoggedIn">
         <router-link to="/newtrail">Add New Trail</router-link> |
-        <button type="button" class="nav-button">Log out</button>
+        <button @click="openLogOutModal" class="nav-button">Log out</button>
       </template>
 
       <template v-else>
@@ -24,26 +28,46 @@
 </template>
 
 <script>
-import { onMounted } from 'vue';
+import { ref } from 'vue';
 import backgroundImage from '@/assets/background.jpg';
 import AboutModal from "@/components/modal/AboutModal.vue";
+import LogOutModal from "@/components/modal/LogOutModal.vue";
+import NavigationService from "@/service/NavigationService";
 
 export default {
   name: "App",
-  components: { AboutModal },
+  components: { AboutModal, LogOutModal },
+
   data() {
     return {
-      modalIsOpen: false,
+      aboutModalIsOpen: false,
+      logOutModalIsOpen: false,
       isLoggedIn: false
     };
   },
   methods: {
     openAboutModal() {
-      this.modalIsOpen = true;
+      this.aboutModalIsOpen = true;
     },
-    closeModal() {
-      this.modalIsOpen = false;
+    closeAboutModal() {
+      this.aboutModalIsOpen = false;
     },
+
+    openLogOutModal() {
+      this.logOutModalIsOpen = true;
+    },
+    closeLogOutModal() {
+      this.logOutModalIsOpen = false;
+    },
+
+    executeLogOut() {
+      sessionStorage.clear();
+      this.updateNavMenu();
+      NavigationService.navigateToHomeView();
+      this.isLoggedIn = false;
+      this.closeLogOutModal();
+    },
+
     updateNavMenu() {
       let profileId = sessionStorage.getItem('profileId');
       this.isLoggedIn = profileId !== null;

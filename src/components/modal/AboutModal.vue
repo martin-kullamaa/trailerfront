@@ -10,6 +10,7 @@
     </template>
 
     <template #footer>
+      <button type="button" class="btn btn-success mt-2 w-40" @click="$emit('event-close-modal')">Close</button>
     </template>
 
   </Modal>

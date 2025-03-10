@@ -1,12 +1,7 @@
 <template>
   <div>
-    <div class="container text-center">
+    <div class="container text-center mt-5">
 
-      <div class="row justify-content-center">
-        <div class="col 1rem">
-          <h1>Uue konto registreerimine</h1>
-        </div>
-      </div>
 
       <div class="row justify-content-center">
         <div class="col col-3">

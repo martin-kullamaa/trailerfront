@@ -13,7 +13,7 @@
           <div class="mb-3">
             <button @click="login" type="submit" class="btn btn-success mt-2 w-50">Log in</button>
           </div>
-          <div>
+          <div class="mb-3">
             <button @click="navigateToRegisterView" type="button" class="btn btn-success mt-2 w-50">Register</button>
           </div>
         </div>
