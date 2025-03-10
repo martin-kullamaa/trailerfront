@@ -26,8 +26,8 @@ const routes = [
     component: RegisterView
   },
   {
-    path: '/newtrail',
-    name: 'newtrailRoute',
+    path: '/trail',
+    name: 'trailRoute',
     component: NewTrailView
   }
 ]

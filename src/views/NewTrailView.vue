@@ -15,6 +15,7 @@
             <label for="trailLength" class="form-label text-start d-block">Trail length (km)</label>
             <input v-model="newTrail.trailLength" type="text" class="form-control" id="trailLength" placeholder="Trail length (km)">
           </div>
+          <button @click="submitTrail" type="submit" class="btn btn-info">Continue</button>
         </div>
         <div class="col">
           <div class="d-flex justify-content-center">
@@ -29,7 +30,6 @@
           </div>
         </div>
       </div>
-      <button @click="submitTrail">Continue</button>
     </div>
   </div>
 </template>
@@ -39,12 +39,12 @@ import MapComponent from "@/components/MapComponent.vue";
 import TrailService from "@/service/TrailService";
 
 export default {
-  name: "TrailView",
+  name: "NewTrailView",
   components: { MapComponent },
   data() {
     return {
       newTrail: {
-        profileId: 0, // Должен быть задан соответственно или получен из контекста
+        profileId: 0,
         trailName: "",
         trailDescription: "",
         trailLength: 0,
@@ -55,14 +55,18 @@ export default {
       }
     };
   },
+
+  created() { // Правильное место для жизненного цикла created
+    this.newTrail.profileId = sessionStorage.getItem('profileId') || 0; // Добавлено || 0 для обработки случаев, когда sessionStorage не содержит profileId
+  },
   methods: {
     handleMarkerPlaced(markerData) {
       if (this.newTrail.startLatitude === 0 && this.newTrail.startLongitude === 0) {
-        // Установка первого маркера как начальной точки
+        // Setting the startname
         this.newTrail.startLatitude = markerData.lat;
         this.newTrail.startLongitude = markerData.lng;
       } else {
-        // Добавление последующих точек в массив locationStopDtos
+        // Setting the locationStopDtos
         this.newTrail.locationStopDtos.push({
           latitude: markerData.lat,
           longitude: markerData.lng,
@@ -71,10 +75,10 @@ export default {
       }
     },
     submitTrail() {
-      console.log("Submitting trail with data:", this.newTrail); // Добавьте эту строку для отладки
+      console.log("Submitting trail with data:", this.newTrail);
       TrailService.createTrail(this.newTrail)
           .then(response => {
-            console.log('Response from server:', response); // Просмотрите ответ сервера
+            console.log('Response from server:', response);
             alert('Trail successfully added!');
           })
           .catch(error => {
@@ -82,6 +86,7 @@ export default {
             alert('Failed to add trail.');
           });
     }
+
   }
 }
 </script>

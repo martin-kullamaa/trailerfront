@@ -1,10 +1,20 @@
 <template>
-  <div
-      ref="mapContainer"
-      class="map-container"
-      :style="{ width: width, height: height }"
-  ></div>
+    <div
+        ref="mapContainer"
+        class="map-container"
+        :style="{ width: width, height: height }"
+    ></div>
+  <div v-if="isTrailPage">
+    <button @click="clearMarkers" class="btn btn-danger">Clear Markers</button>
+  </div>
+
 </template>
+
+
+
+
+
+
 
 <script>
 import L from 'leaflet'
@@ -33,6 +43,11 @@ export default {
       userMarkers: []
     };
   },
+  computed: {
+    isTrailPage() {
+      return this.$route.path === '/trail';
+    }
+  },
   methods: {
 
     initializeMap() {
@@ -42,54 +57,25 @@ export default {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19}).addTo(this.map)
       // new function for click
       if (this.clickToAddMarker) {
-        this.map.on('click', this.handleMapClick);
-      }
+        this.map.on('click', (e) => {
+          const customIcon = L.icon({
+            iconUrl: markerIcon,
+            shadowUrl: markerShadow,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+          });
 
-      this.addMarkers();
-    },
+          const newMarker = L.marker(e.latlng, {icon: customIcon}).addTo(this.map);
+          newMarker.bindPopup("New Trail Point").openPopup();
+          this.userMarkers.push(newMarker);
 
-    // map click
-    handleMapClick(e) {
-      let markerFound = false;
-
-      for (let i = this.userMarkers.length - 1; i >= 0; i--) {
-        const markerPosition = this.userMarkers[i].getLatLng();
-        if (e.latlng.distanceTo(markerPosition) < 10) { // Проверяем близость клика к маркеру
-          this.map.removeLayer(this.userMarkers[i]); // Удаление маркера с карты
-          this.userMarkers.splice(i, 1); // Удаление маркера из массива
-          markerFound = true;
-          break; // Прерываем цикл, т.к. маркер найден и удален
-        }
-      }
-
-      if (!markerFound) {
-        this.addNewMarker(e.latlng); // Добавление нового маркера, если рядом не было найдено других
+          // Emit an event with the latitude and longitude of the new marker
+          this.$emit('marker-placed', {lat: e.latlng.lat, lng: e.latlng.lng});
+        });
       }
     },
-
-
-    //for new trail
-    addNewMarker(latlng) {
-      const customIcon = L.icon({
-        iconUrl: markerIcon,
-        shadowUrl: markerShadow,
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      });
-
-      const newMarker = L.marker(latlng, {icon: customIcon}).addTo(this.map);
-      newMarker.bindPopup("New Trail Point").openPopup();
-
-      newMarker.on('click', () => {
-        this.map.removeLayer(newMarker); // Удаление маркера с карты
-        this.userMarkers = this.userMarkers.filter(marker => marker !== newMarker); // Удаление маркера из массива
-      });
-
-      this.userMarkers.push(newMarker); // Добавление нового маркера в массив
-    },
-
 
     addMarkers() {
       console.log("olen siin")
@@ -110,13 +96,15 @@ export default {
       console.log('Marker icon URL:', markerIcon)
       console.log('Marker shadow URL:', markerShadow)
     },
-
-    clearUserMarkers() {
+    clearMarkers() {
+      // Удаление каждого маркера с карты
       this.userMarkers.forEach(marker => {
         this.map.removeLayer(marker);
       });
+      // Очистка массива userMarkers
       this.userMarkers = [];
     },
+
 
   },
 
@@ -125,9 +113,10 @@ export default {
   },
   watch: {
     markers(newMarkers) {
-      this.clearUserMarkers();
       this.addMarkers();
     }
   }
 }
 </script>
+
+

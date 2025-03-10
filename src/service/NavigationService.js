@@ -8,6 +8,6 @@ export default {
         router.push({name: 'homeRoute'})
     },
     navigateToNewTrailView() {
-        router.push({name: 'newtrailRoute'})
+        router.push({name: 'trailRoute'})
     },
 }
