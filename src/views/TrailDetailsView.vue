@@ -26,15 +26,30 @@
 
         <div class="card-body">
           <div class="dropdown">
-            <button class="btn btn-success dropdown-toggle w-50" type="button" data-bs-toggle="dropdown"
+            <button class="btn btn-success dropdown-toggle w-50 m-2" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
               Add equipment
             </button>
+            <font-awesome-icon
+                icon="plus"
+                class="position-absolute"
+                style="top: 50%; left: calc(50% + 110px); transform: translateY(-50%);"/>
             <ul class="dropdown-menu custom-dropdown w-50">
               <li v-for="currentEquipment in equipment" :key="currentEquipment.id">
-                <a @click="addTrailEquipment(currentEquipment)" class="dropdown-item" href="#">{{ currentEquipment.name }}</a>
+                <a @click="addTrailEquipment(currentEquipment)" class="dropdown-item" href="#">{{
+                    currentEquipment.name
+                  }}</a>
               </li>
             </ul>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-center w-50 mx-auto">
+            <input v-model="newEquipment" type="text" class="form-control"
+                   placeholder="Equipment name"
+                   :class="{'is-invalid': showErrors && !newEquipment.trim()}">
+            <button class="btn btn-success" type="button" aria-expanded="false">Add</button>
           </div>
         </div>
 
@@ -78,7 +93,8 @@
       <div class="card transparent-card">
         <h6 class="mt-2">Added equipment:</h6>
         <div class="card-body">
-          <span v-for="trailEquipment in trailEquipment"
+          <span v-for="trailEquipment in trailEquipment" :key="trailEquipment.equipmentId"
+                @click="deleteTrailEquipment(trailEquipment.equipmentId)"
                 class="badge text-bg-success custom-badge pointer me-3">
                 {{ trailEquipment.name }}
           </span>
@@ -110,10 +126,11 @@ export default {
         data: '',
         name: ''
       },
+      newEquipment: '',
       equipment: [],
       trailEquipment: [],
       currentEquipment: {
-        id: 0,
+        equipmentId: 0,
         name: ''
       },
       types: [],
@@ -197,14 +214,16 @@ export default {
       }
     },
 
-    // todo: add error handling = can't choose type that's already chose
     addTrailType(currentType) {
-      this.currentType = currentType
-      TrailService.sendPostTrailTypeRequest(this.trailId, this.currentType.typeId)
+      const alreadyAdded = this.trailTypes.some(type => type.typeId === currentType.typeId)
+      if (alreadyAdded) {
+        return
+      }
+
+      TrailService.sendPostTrailTypeRequest(this.trailId, currentType.typeId)
           .then(() => this.getTrailTypes(this.trailId))
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
-
 
     deleteTrailType(typeId) {
       TrailService.sendDeleteTrailTypeRequest(this.trailId, typeId)
@@ -218,18 +237,21 @@ export default {
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
-    addTrailEquipment() {
-      axios.post('/some/path', null, {
-            params: {
-              someRequestParam1: this.someDataBlockVariable1,
-              someRequestParam2: this.someDataBlockVariable2
-            }
-          }
-      ).then(response => {
-        this.someDataBlockResponseObject = response.data
-      }).catch(error => {
-        this.someDataBlockErrorResponseObject = error.response.data
-      })
+    addTrailEquipment(currentEquipment) {
+      const alreadyAdded = this.trailEquipment.some(equipment => equipment.equipmentId === currentEquipment.equipmentId)
+      if (alreadyAdded) {
+        return
+      }
+      this.currentEquipment = currentEquipment
+      TrailService.sendPostTrailEquipmentRequest(this.trailId, this.currentEquipment.equipmentId)
+          .then(() => this.getTrailEquipment(this.trailId))
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+    deleteTrailEquipment(equipmentId) {
+      TrailService.sendDeleteTrailEquipmentRequest(this.trailId, equipmentId)
+          .then(() => this.getTrailEquipment(this.trailId))
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
   },
   beforeMount() {
