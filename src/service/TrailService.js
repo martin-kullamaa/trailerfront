@@ -43,4 +43,24 @@ export default {
             }
         );
     },
+
+    sendPostTrailEquipmentRequest(trailId, equipmentId) {
+        return axios.post('/trail/equipment', null, {
+                params: {
+                    trailId: trailId,
+                    equipmentId: equipmentId
+                }
+            }
+        );
+    },
+
+    sendDeleteTrailEquipmentRequest(trailId, equipmentId) {
+        return axios.delete('/trail/equipment', {
+                params: {
+                    trailId: trailId,
+                    equipmentId: equipmentId
+                }
+            }
+        );
+    },
 }
