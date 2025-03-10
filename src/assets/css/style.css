@@ -85,7 +85,7 @@ nav {
 }
 
 /* Ühtlustame nav-lingid ja nupud */
-nav a, .nav-button {
+nav > a, .nav-button {
     font-weight: bold;
     color: #e9ecef;
     text-decoration: none;
