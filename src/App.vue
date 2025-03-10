@@ -1,6 +1,10 @@
 <template>
+  <AboutModal :modal-is-open="modalIsOpen" @event-close-modal="closeModal" />
+
   <div class="app-content">
     <nav>
+      <!-- "About" nupp, mis avab modaali -->
+      <button @click="openAboutModal" class="nav-button">About</button> |
       <router-link to="/">Map</router-link> |
       <router-link to="/login">Log in</router-link>
     </nav>
@@ -8,9 +12,21 @@
   </div>
 </template>
 
-<script>
-import { onMounted } from 'vue';
+<script setup>
+import { onMounted, ref } from 'vue';
 import backgroundImage from '@/assets/background.jpg';
+import AboutModal from "@/components/modal/AboutModal.vue";
+
+// Modaali avamise/sulgemise seisund
+const modalIsOpen = ref(false);
+
+const openAboutModal = () => {
+  modalIsOpen.value = true;
+};
+
+const closeModal = () => {
+  modalIsOpen.value = false;
+};
 
 export default {
   data() {
