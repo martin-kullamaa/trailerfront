@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-center">
 
-    <div class="col-sm-3 mb-3 mb-sm-0">
+    <div class="col-sm-3 mb-3">
       <div class="card transparent-card">
         <div class="card-body ">
           <TrailPicture :picture-data="currentPicture.data" @event-new-picture-selected="setPictureData"/>
@@ -32,7 +32,7 @@
             </button>
             <ul class="dropdown-menu custom-dropdown w-50">
               <li v-for="currentEquipment in equipment" :key="currentEquipment.id">
-                <a class="dropdown-item" href="#">{{ currentEquipment.name }}</a>
+                <a @click="addTrailEquipment(currentEquipment)" class="dropdown-item" href="#">{{ currentEquipment.name }}</a>
               </li>
             </ul>
           </div>
@@ -66,7 +66,7 @@
         <h6 class="mt-2">Added type(s):</h6>
         <div class="container text-center">
           <div class="row">
-            <div class="col" v-for="trailType in trailTypes" :key="trailType.typeId">
+            <div v-for="trailType in trailTypes" :key="trailType.typeId" class="col">
               <div>
                 <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon"/>
                 <font-awesome-icon @click="deleteTrailType(trailType.typeId)" icon="trash" class="trash-icon pointer"/>
@@ -78,7 +78,10 @@
       <div class="card transparent-card">
         <h6 class="mt-2">Added equipment:</h6>
         <div class="card-body">
-          <span class="badge text-bg-success custom-badge pointer me-3">saapad</span>
+          <span v-for="trailEquipment in trailEquipment"
+                class="badge text-bg-success custom-badge pointer me-3">
+                {{ trailEquipment.name }}
+          </span>
         </div>
       </div>
     </div>
@@ -91,6 +94,7 @@ import TrailPicture from "@/components/TrailPicture.vue";
 import PictureService from "@/service/PictureService";
 import EquipmentService from "@/service/EquipmentService";
 import TypeService from "@/service/TypeService";
+import TrailService from "@/service/TrailService";
 
 export default {
   name: "TrailDetailsView",
@@ -101,17 +105,17 @@ export default {
       // todo: trailId needs to be emitted from NewTrailView
       // todo: also emit trailName here and incorporate it on the cards
       trailId: 1,
+      trailPictures: [],
       currentPicture: {
         data: '',
         name: ''
       },
-      trailPictures: [],
+      equipment: [],
+      trailEquipment: [],
       currentEquipment: {
         id: 0,
         name: ''
       },
-      equipment: [],
-      trailEquipment: [],
       types: [],
       trailTypes: [],
       currentType: {
@@ -161,13 +165,11 @@ export default {
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
-
     getEquipment() {
       EquipmentService.sendGetEquipmentRequest()
           .then(response => this.equipment = response.data)
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
-
 
     getTypes() {
       TypeService.sendGetTypesRequest()
@@ -175,9 +177,8 @@ export default {
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
-
     getTrailTypes() {
-      TypeService.sendGetTrailTypeRequest(this.trailId)
+      TrailService.sendGetTrailTypeRequest(this.trailId)
           .then(response => this.trailTypes = response.data)
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
@@ -199,16 +200,36 @@ export default {
     // todo: add error handling = can't choose type that's already chose
     addTrailType(currentType) {
       this.currentType = currentType
-      TypeService.sendPostTrailTypeRequest(this.trailId, this.currentType.typeId)
+      TrailService.sendPostTrailTypeRequest(this.trailId, this.currentType.typeId)
           .then(() => this.getTrailTypes(this.trailId))
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
 
     deleteTrailType(typeId) {
-      TypeService.sendDeleteTrailTypeRequest(this.trailId, typeId)
+      TrailService.sendDeleteTrailTypeRequest(this.trailId, typeId)
           .then(() => this.getTrailTypes(this.trailId))
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+    getTrailEquipment() {
+      TrailService.sendGetTrailEquipmentRequest(this.trailId)
+          .then(response => this.trailEquipment = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+    addTrailEquipment() {
+      axios.post('/some/path', null, {
+            params: {
+              someRequestParam1: this.someDataBlockVariable1,
+              someRequestParam2: this.someDataBlockVariable2
+            }
+          }
+      ).then(response => {
+        this.someDataBlockResponseObject = response.data
+      }).catch(error => {
+        this.someDataBlockErrorResponseObject = error.response.data
+      })
     },
   },
   beforeMount() {
@@ -216,6 +237,7 @@ export default {
     this.getEquipment()
     this.getTypes()
     this.getTrailTypes()
+    this.getTrailEquipment()
   }
 }
 </script>
