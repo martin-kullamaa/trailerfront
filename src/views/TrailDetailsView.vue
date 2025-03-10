@@ -8,7 +8,7 @@
           <!--          todo: add character limit to pic name-->
           <input v-model="currentPicture.name" type="text" class="form-control mt-2 w-50 mx-auto"
                  placeholder="Picture title"
-                 :class="{'is-invalid': showErrors && !currentPicture.name.trim()}">
+                 :class="{'is-invalid': pictureError && !currentPicture.name.trim()}">
           <button type="button" class="btn btn-success mt-2 w-50" @click="addPicture">Add picture</button>
         </div>
 
@@ -31,8 +31,9 @@
               Add equipment
             </button>
             <font-awesome-icon
+                @click="showEquipmentInput = true"
                 icon="plus"
-                class="position-absolute"
+                class="position-absolute pointer"
                 style="top: 50%; left: calc(50% + 110px); transform: translateY(-50%);"/>
             <ul class="dropdown-menu custom-dropdown w-50">
               <li v-for="currentEquipment in equipment" :key="currentEquipment.id">
@@ -45,12 +46,23 @@
         </div>
 
         <div class="card-body">
-          <div class="d-flex align-items-center justify-content-center w-50 mx-auto">
+
+          <div v-if="showEquipmentInput" class="d-flex align-items-center justify-content-center w-50 mx-auto">
             <input v-model="newEquipment" type="text" class="form-control"
                    placeholder="Equipment name"
-                   :class="{'is-invalid': showErrors && !newEquipment.trim()}">
-            <button class="btn btn-success" type="button" aria-expanded="false">Add</button>
+                   :class="{'is-invalid': equipmentError && !newEquipment.trim()}">
+            <button
+                @click="addNewEquipment()"
+                class="btn btn-success" type="button" aria-expanded="false">Add
+            </button>
+            <font-awesome-icon
+                @click="showEquipmentInput = false"
+                icon="angle-up"
+                class="position-absolute pointer"
+                style="top: 94%; left: calc(50% + 110px); transform: translateY(-50%);"/>
           </div>
+
+
         </div>
 
       </div>
@@ -92,7 +104,7 @@
       </div>
       <div class="card transparent-card">
         <h6 class="mt-2">Added equipment:</h6>
-        <div class="card-body">
+        <div class="container text-center">
           <span v-for="trailEquipment in trailEquipment" :key="trailEquipment.equipmentId"
                 @click="deleteTrailEquipment(trailEquipment.equipmentId)"
                 class="badge text-bg-success custom-badge pointer me-3">
@@ -117,7 +129,9 @@ export default {
   components: {TrailPicture},
   data() {
     return {
-      showErrors: false,
+      pictureError: false,
+      equipmentError: false,
+      showEquipmentInput: false,
       // todo: trailId needs to be emitted from NewTrailView
       // todo: also emit trailName here and incorporate it on the cards
       trailId: 1,
@@ -149,7 +163,7 @@ export default {
 
     addPicture() {
       if (!this.currentPicture.data || !this.currentPicture.name.trim()) {
-        this.showErrors = true;
+        this.pictureError = true;
         return;
       }
 
@@ -167,6 +181,24 @@ export default {
           .catch(error => {
             console.error("Error saving picture:", error)
           });
+    },
+
+    addNewEquipment() {
+      if (!this.newEquipment.trim()) {
+        this.equipmentError = true
+        return
+      }
+      this.equipmentError = false
+
+      EquipmentService.sendPostEquipmentRequest(this.newEquipment)
+          .then(() => {
+            this.getEquipment()
+            this.newEquipment = ''
+            this.showEquipmentInput = false;
+          })
+          .catch(error => {
+            this.someDataBlockErrorResponseObject = error.response.data
+          })
     },
 
     removePicture(index) {
