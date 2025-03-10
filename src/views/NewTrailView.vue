@@ -37,6 +37,7 @@
 <script>
 import MapComponent from "@/components/MapComponent.vue";
 import TrailService from "@/service/TrailService";
+import NavigationService from "@/service/NavigationService";
 
 export default {
   name: "NewTrailView",
@@ -76,10 +77,11 @@ export default {
     },
     submitTrail() {
       console.log("Submitting trail with data:", this.newTrail);
-      TrailService.createTrail(this.newTrail)
+      TrailService.sendPostTrailRequest(this.newTrail)
           .then(response => {
             console.log('Response from server:', response);
             alert('Trail successfully added!');
+            NavigationService.navigateToNewTrailDetailsView()
           })
           .catch(error => {
             console.error('There was an error!', error.response ? error.response.data : error);

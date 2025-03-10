@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default {
-    createTrail(newTrail) {
+    sendPostTrailRequest(newTrail) {
         return axios.post('/trail', newTrail);
     },
 
