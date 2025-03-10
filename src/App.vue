@@ -10,7 +10,7 @@
 
       <template v-if="isLoggedIn">
         <router-link to="/newtrail">Add New Trail</router-link> |
-        <button type="button" class="btn btn-success">Log out</button>
+        <button type="button" class="nav-button">Log out</button>
       </template>
 
       <template v-else>

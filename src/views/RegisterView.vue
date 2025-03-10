@@ -3,7 +3,7 @@
     <div class="container text-center">
 
       <div class="row justify-content-center">
-        <div class="col">
+        <div class="col 1rem">
           <h1>Uue konto registreerimine</h1>
         </div>
       </div>
@@ -23,7 +23,7 @@
             <input v-model="newProfile.email" type="text" class="form-control" placeholder="Email">
           </div>
 
-            <button @click="addNewProfile" type="submit" class="btn btn-info">Create Account</button>
+            <button @click="addNewProfile" type="submit" class="btn btn-success mt-2 w-50">Create Account</button>
 
         </div>
 
