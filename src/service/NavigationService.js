@@ -7,4 +7,7 @@ export default {
     navigateToHomeView() {
         router.push({name: 'homeRoute'})
     },
+    navigateToNewTrailView() {
+        router.push({name: 'newtrailRoute'})
+    },
 }
