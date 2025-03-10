@@ -12,29 +12,27 @@
   </div>
 </template>
 
-<script setup>
-import { onMounted, ref } from 'vue';
+<script>
+import { onMounted } from 'vue';
 import backgroundImage from '@/assets/background.jpg';
 import AboutModal from "@/components/modal/AboutModal.vue";
 
-// Modaali avamise/sulgemise seisund
-const modalIsOpen = ref(false);
-
-const openAboutModal = () => {
-  modalIsOpen.value = true;
-};
-
-const closeModal = () => {
-  modalIsOpen.value = false;
-};
-
 export default {
+  name: "App",
+  components: { AboutModal },
   data() {
     return {
+      modalIsOpen: false,
       isLoggedIn: false
-    }
+    };
   },
   methods: {
+    openAboutModal() {
+      this.modalIsOpen = true;
+    },
+    closeModal() {
+      this.modalIsOpen = false;
+    },
     updateNavMenu() {
       let profileId = sessionStorage.getItem('profileId');
       this.isLoggedIn = profileId !== null;
@@ -42,12 +40,12 @@ export default {
   },
   mounted() {
     document.body.style.backgroundImage = `url(${backgroundImage})`;
-    document.body.style.backgroundSize = '100% 100%'; // Venitab täpselt servadeni
-    document.body.style.backgroundRepeat = 'no-repeat'; // Väldib kordamist
-    document.body.style.backgroundPosition = 'center'; // Joondab keskele
-    document.body.style.backgroundColor = 'black'; // Täidab ülejäänud ala musta värviga
+    document.body.style.backgroundSize = '100% 100%';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundColor = 'black';
   }
-}
+};
 </script>
 
 <style>
