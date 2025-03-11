@@ -56,6 +56,12 @@
     padding: 20px;
 }
 
+.circular-logo {
+    border-radius: 50%;
+    border: 2px solid #ccc; /* Optional: adjust border thickness and color */
+    object-fit: cover; /* Ensures the image fills the circle nicely */
+}
+
 /* Ensure the modal title and footer align correctly */
 .modal-header,
 .modal-footer {
