@@ -132,10 +132,7 @@ export default {
       pictureError: false,
       equipmentError: false,
       showEquipmentInput: false,
-      // todo: trailId needs to be emitted from NewTrailView
-      // todo: also emit trailName here and incorporate it on the cards
-      trailId: 0,
-      trailName: '',
+      trailId: this.$route.params.trailId,
       trailPictures: [],
       currentPicture: {
         data: '',

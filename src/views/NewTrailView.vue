@@ -89,12 +89,11 @@ export default {
       this.newTrail.locationStopDtos = [];
     },
     submitTrail() {
-      console.log("Submitting trail with data:", this.newTrail);
       TrailService.sendPostTrailRequest(this.newTrail)
           .then(response => {
-            console.log('Response from server:', response);
+            const newTrailId = response.data
             alert('Trail successfully added!');
-            NavigationService.navigateToNewTrailDetailsView()
+            NavigationService.navigateToNewTrailDetailsView(newTrailId)
           })
           .catch(error => {
             console.error('There was an error!', error.response ? error.response.data : error);

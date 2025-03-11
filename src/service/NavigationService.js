@@ -10,7 +10,7 @@ export default {
     navigateToNewTrailView() {
         router.push({name: 'trailRoute'})
     },
-    navigateToNewTrailDetailsView() {
-        router.push({name: 'trailDetailsRoute'})
+    navigateToNewTrailDetailsView(trailId) {
+        router.push({name: 'trailDetailsRoute', params: {trailId}})
     },
 }
