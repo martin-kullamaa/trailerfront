@@ -5,21 +5,28 @@
         <div class="col col-4">
           <div class="mb-3">
             <label for="trailName" class="form-label text-start d-block">Trail name</label>
-            <input v-model="newTrail.trailName" type="text" class="form-control" id="trailName">
+            <input v-model="newTrail.trailName" type="text" class="form-control"
+                   :class="{'is-invalid': showErrors && !newTrail.trailName}">
+            <div class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
             <label for="trailDescription" class="form-label text-start d-block">Description</label>
-            <textarea v-model="newTrail.trailDescription" class="form-control" id="trailDescription" rows="10"></textarea>
+            <textarea v-model="newTrail.trailDescription" class="form-control"
+                      :class="{'is-invalid': showErrors && !newTrail.trailDescription}"
+                      id="trailDescription" rows="10"></textarea>
+            <div class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
             <label for="trailLength" class="form-label text-start d-block">Trail length</label>
             <div class="input-group">
               <input v-model="newTrail.trailLength" type="text" class="form-control" id="trailLength">
               <span class="input-group-text">km</span>
+              <div class="invalid-feedback"></div>
             </div>
           </div>
-          <button @click="submitTrail" type="submit" class="btn btn-success mt-2 w-40 me-2">Continue</button>
-          <button @click="goHome" class="btn btn-success mt-2 w-40">Back</button>
+          <button @click="goHome" class="btn btn-success mt-2 w-40 me-2">Back</button>
+          <button @click="submitTrail" type="submit" class="btn btn-success mt-2 w-40">Continue</button>
+
         </div>
         <div class="col">
           <div class="d-flex justify-content-center">
@@ -49,6 +56,8 @@ export default {
   components: { MapComponent },
   data() {
     return {
+      showErrors: false,
+      errorMessage: "",
       newTrail: {
         profileId: 0,
         trailName: "",
@@ -92,6 +101,9 @@ export default {
       this.newTrail.locationStopDtos = [];
     },
     submitTrail() {
+      this.showErrors = true;
+      this.errorMessage = "";
+
       TrailService.sendPostTrailRequest(this.newTrail)
           .then(response => {
             const newTrailId = response.data
