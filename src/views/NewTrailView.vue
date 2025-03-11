@@ -5,18 +5,21 @@
         <div class="col col-4">
           <div class="mb-3">
             <label for="trailName" class="form-label text-start d-block">Trail name</label>
-            <input v-model="newTrail.trailName" type="text" class="form-control" id="trailName" placeholder="Trail name">
+            <input v-model="newTrail.trailName" type="text" class="form-control" id="trailName">
           </div>
           <div class="mb-3">
             <label for="trailDescription" class="form-label text-start d-block">Description</label>
-            <textarea v-model="newTrail.trailDescription" class="form-control" id="trailDescription" rows="3" placeholder="Description"></textarea>
+            <textarea v-model="newTrail.trailDescription" class="form-control" id="trailDescription" rows="10"></textarea>
           </div>
           <div class="mb-3">
-            <label for="trailLength" class="form-label text-start d-block">Trail length (km)</label>
-            <input v-model="newTrail.trailLength" type="text" class="form-control" id="trailLength" placeholder="Trail length (km)">
+            <label for="trailLength" class="form-label text-start d-block">Trail length</label>
+            <div class="input-group">
+              <input v-model="newTrail.trailLength" type="text" class="form-control" id="trailLength">
+              <span class="input-group-text">km</span>
+            </div>
           </div>
-          <button @click="submitTrail" type="submit" class="btn btn-success mt-2 w-50">Continue</button>
-          <button @click="goHome" class="btn btn-success mt-2 w-50">Back</button>
+          <button @click="submitTrail" type="submit" class="btn btn-success mt-2 w-40 me-2">Continue</button>
+          <button @click="goHome" class="btn btn-success mt-2 w-40">Back</button>
         </div>
         <div class="col">
           <div class="d-flex justify-content-center">
