@@ -7,6 +7,16 @@
     <button v-if="isTrailPage" @click="clearMarkers" class="btn btn-danger clear-markers-btn">
       Clear Markers
     </button>
+    <div v-else class="map-overlay-dropdown">
+      <div class="dropdown">
+        <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          Filter by
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 

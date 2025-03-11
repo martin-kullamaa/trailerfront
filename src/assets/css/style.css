@@ -9,6 +9,13 @@
     z-index: 1000
 }
 
+.map-overlay-dropdown {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* Ensures it stays on top */
+}
+
 .custom-marker-icon {
     background: transparent; /* Remove default background */
     border: none;
