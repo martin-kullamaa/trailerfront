@@ -18,10 +18,10 @@
           </div>
           <div class="mb-3">
             <label for="trailLength" class="form-label text-start d-block">Trail length</label>
-            <div class="input-group">
-              <input v-model="newTrail.trailLength" type="text" class="form-control" id="trailLength">
-              <span class="input-group-text">km</span>
-              <div class="invalid-feedback"></div>
+
+            <div class="input-group mb-3">
+              <input v-model="newTrail.trailLength" :class="{'is-invalid': showErrors && !newTrail.trailLength}" type="text" class="form-control" aria-describedby="basic-addon2">
+              <span class="input-group-text" id="basic-addon2">km</span>
             </div>
           </div>
           <button @click="goHome" class="btn btn-success mt-2 w-40 me-2">Back</button>
