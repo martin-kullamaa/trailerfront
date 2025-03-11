@@ -55,23 +55,25 @@ export default {
       this.map = L.map(this.$refs.mapContainer).setView(this.center, this.zoom)
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19}).addTo(this.map)
-      // new function for click
+
       if (this.clickToAddMarker) {
         this.map.on('click', (e) => {
-          const customIcon = L.icon({
-            iconUrl: markerIcon,
-            shadowUrl: markerShadow,
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
+
+          const order = this.userMarkers.length;
+
+          const customIcon = L.divIcon({
+            className: 'custom-marker-icon', // custom CSS class for styling
+            html: `<div class="marker-label">${order}</div>`,
+            iconSize: [30, 30], // adjust size as needed
+            iconAnchor: [15, 30] // anchor point of the icon
           });
 
           const newMarker = L.marker(e.latlng, {icon: customIcon}).addTo(this.map);
-          newMarker.bindPopup("New Trail Point").openPopup();
+
+          // newMarker.bindPopup(order.toString()).openPopup();
+
           this.userMarkers.push(newMarker);
 
-          // Emit an event with the latitude and longitude of the new marker
           this.$emit('marker-placed', {lat: e.latlng.lat, lng: e.latlng.lng});
         });
       }
@@ -93,9 +95,8 @@ export default {
         L.marker([marker.latitude, marker.longitude], {icon: customIcon})
             .addTo(this.map);
       }
-      console.log('Marker icon URL:', markerIcon)
-      console.log('Marker shadow URL:', markerShadow)
     },
+
     clearMarkers() {
       // Удаление каждого маркера с карты
       this.userMarkers.forEach(marker => {

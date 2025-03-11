@@ -1,3 +1,21 @@
+.custom-marker-icon {
+    background: transparent; /* Remove default background */
+    border: none;
+}
+
+.marker-label {
+    background: #2a93ee;  /* Choose your marker color */
+    color: white;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid white; /* optional: border around marker */
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
 /* Modal overlay to cover full screen */
 .modal-overlay {
     position: fixed;
