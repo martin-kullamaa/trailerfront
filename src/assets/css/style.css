@@ -1,3 +1,14 @@
+.map-wrapper {
+    position: relative;
+}
+
+.clear-markers-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000
+}
+
 .custom-marker-icon {
     background: transparent; /* Remove default background */
     border: none;
@@ -43,6 +54,12 @@
 /* Adjust Bootstrap modal-content */
 .modal-content {
     padding: 20px;
+}
+
+.circular-logo {
+    border-radius: 50%;
+    border: 2px solid #ccc; /* Optional: adjust border thickness and color */
+    object-fit: cover; /* Ensures the image fills the circle nicely */
 }
 
 /* Ensure the modal title and footer align correctly */
