@@ -4,16 +4,17 @@
 }
 
 .marker-label {
-    background: #2a93ee;  /* Choose your marker color */
-    color: white;
-    font-weight: bold;
+    position: relative;
+    /* Set the size of the pin */
     width: 30px;
     height: 30px;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 50%;
-    border: 2px solid white; /* optional: border around marker */
-    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    /* Create the pin shape */
+    border: 4px solid #fff;
+    border-radius: 50% 50% 50% 0;
+    /*transform: rotate(-45deg);*/
+    background-color: #007991; /* Or any color you want */
+    /* Optional shadow */
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Modal overlay to cover full screen */

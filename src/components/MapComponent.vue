@@ -61,11 +61,12 @@ export default {
 
           const order = this.userMarkers.length;
 
+          // Create a custom icon using L.divIcon:
           const customIcon = L.divIcon({
-            className: 'custom-marker-icon', // custom CSS class for styling
-            html: `<div class="marker-label">${order}</div>`,
-            iconSize: [30, 30], // adjust size as needed
-            iconAnchor: [15, 30] // anchor point of the icon
+            className: 'custom-marker-icon', // Use our custom-marker-icon class
+            html: `<div class="marker-label">${order}</div>`, // Insert the order number if desired
+            iconSize: [28, 28], // Adjust size as needed (includes border)
+            iconAnchor: [3, 28] // Adjust anchor so it points to the clicked location
           });
 
           const newMarker = L.marker(e.latlng, {icon: customIcon}).addTo(this.map);
@@ -73,6 +74,13 @@ export default {
           // newMarker.bindPopup(order.toString()).openPopup();
 
           this.userMarkers.push(newMarker);
+
+          const coordinates = this.userMarkers.map(marker => marker.getLatLng());
+          if (this.trailPolyline) {
+            this.trailPolyline.setLatLngs(coordinates);
+          } else {
+            this.trailPolyline = L.polyline(coordinates, { color: 'blue' }).addTo(this.map);
+          }
 
           this.$emit('marker-placed', {lat: e.latlng.lat, lng: e.latlng.lng});
         });
@@ -104,6 +112,11 @@ export default {
       });
       // Очистка массива userMarkers
       this.userMarkers = [];
+
+      if (this.trailPolyline) {
+        this.map.removeLayer(this.trailPolyline);
+        this.trailPolyline = null;
+      }
 
       this.$emit('markers-cleared');
     },
