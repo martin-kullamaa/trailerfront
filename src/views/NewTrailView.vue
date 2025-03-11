@@ -16,7 +16,7 @@
             <input v-model="newTrail.trailLength" type="text" class="form-control" id="trailLength" placeholder="Trail length (km)">
           </div>
           <button @click="submitTrail" type="submit" class="btn btn-info">Continue</button>
-          <button @click="" class="btn btn-secondary mt-2">Back</button>
+          <button @click="goHome" class="btn btn-secondary mt-2">Back</button>
         </div>
         <div class="col">
           <div class="d-flex justify-content-center">
