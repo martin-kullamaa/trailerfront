@@ -32,7 +32,7 @@ const routes = [
     component: NewTrailView
   },
   {
-    path: '/newtrail-details',
+    path: '/trail-details/:trailId',
     name: 'trailDetailsRoute',
     component: TrailDetailsView
   }
