@@ -8,7 +8,7 @@
             <input v-model="username" type="text" class="form-control" placeholder="Username" :class="{'is-invalid': showErrors && !username}">
           </div>
           <div class="input-group mb-3">
-            <input v-model="password" type="text" class="form-control" placeholder="Password" :class="{'is-invalid': showErrors && !password}">
+            <input v-model="password" type="password" class="form-control" placeholder="Password" :class="{'is-invalid': showErrors && !password}">
           </div>
           <div class="mb-3">
             <button @click="login" type="submit" class="btn btn-success mt-2 w-50">Log in</button>

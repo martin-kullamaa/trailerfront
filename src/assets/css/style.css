@@ -157,6 +157,16 @@ body {
 }
 
 
-
+div.custom-alert {
+    position: relative;
+    top: 10px; /* Liigutab alerti veidi allapoole */
+    font-size: 21px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 12px;
+    background-color: rgba(250, 20, 20, 0.3) !important; /* Tausta poolläbipaistev */
+    color: #f5c6cb; /* Roosa tekst */
+    border: 2px solid #f5c6cb; /* Paksem roosa piirjoon */
+}
 
 

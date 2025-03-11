@@ -20,7 +20,9 @@
         </div>
 
         <button @click="register" type="submit" class="btn btn-success mt-2 w-50">Create Account</button>
-        <div v-if="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
+        <div v-if="errorMessage" class="alert alert-danger mt-3 custom-alert" role="alert">
+          {{ errorMessage }}
+        </div>
       </div>
     </div>
   </div>
@@ -51,7 +53,6 @@ export default {
       this.errorMessage = "";
 
       if (!this.newProfile.username || !this.newProfile.password || !this.newProfile.email || !this.passwordRetype) {
-        this.errorMessage = "Please fill in all fields.";
         return;
       }
 
