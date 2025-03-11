@@ -78,11 +78,8 @@ export default {
       }
     },
     goHome() {
-      // Сброс данных формы
       this.resetTrailData();
-
-      // Перенаправление на главную страницу
-      this.$router.push('/');
+      NavigationService.navigateToHomeView()
     },
 
     resetTrailData() {
