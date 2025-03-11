@@ -134,7 +134,8 @@ export default {
       showEquipmentInput: false,
       // todo: trailId needs to be emitted from NewTrailView
       // todo: also emit trailName here and incorporate it on the cards
-      trailId: 1,
+      trailId: 0,
+      trailName: '',
       trailPictures: [],
       currentPicture: {
         data: '',
