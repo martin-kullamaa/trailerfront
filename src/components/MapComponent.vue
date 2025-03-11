@@ -1,13 +1,13 @@
 <template>
-  <div
-      ref="mapContainer"
-      class="map-container"
-      :style="{ width: width, height: height }"
-  ></div>
-  <div v-if="isTrailPage">
-    <button @click="clearMarkers" class="btn btn-danger">Clear Markers</button>
-  </div>
+<!--  <div ref="mapContainer" class="map-container" :style="{ width: width, height: height }"></div>-->
+<!--  <div v-if="isTrailPage"><button @click="clearMarkers" class="btn btn-danger">Clear Markers</button></div>-->
 
+  <div class="map-wrapper" :style="{ width: width, height: height }">
+    <div ref="mapContainer" class="map-container" style="width: 100%; height: 100%;"></div>
+    <button v-if="isTrailPage" @click="clearMarkers" class="btn btn-danger clear-markers-btn">
+      Clear Markers
+    </button>
+  </div>
 </template>
 
 
