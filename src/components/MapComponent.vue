@@ -1,9 +1,9 @@
 <template>
-    <div
-        ref="mapContainer"
-        class="map-container"
-        :style="{ width: width, height: height }"
-    ></div>
+  <div
+      ref="mapContainer"
+      class="map-container"
+      :style="{ width: width, height: height }"
+  ></div>
   <div v-if="isTrailPage">
     <button @click="clearMarkers" class="btn btn-danger">Clear Markers</button>
   </div>
@@ -103,6 +103,8 @@ export default {
       });
       // Очистка массива userMarkers
       this.userMarkers = [];
+
+      this.$emit('markers-cleared');
     },
 
 
@@ -118,5 +120,9 @@ export default {
   }
 }
 </script>
+
+
+
+
 
 

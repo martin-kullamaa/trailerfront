@@ -16,6 +16,7 @@
             <input v-model="newTrail.trailLength" type="text" class="form-control" id="trailLength" placeholder="Trail length (km)">
           </div>
           <button @click="submitTrail" type="submit" class="btn btn-info">Continue</button>
+          <button @click="goHome" class="btn btn-secondary mt-2">Back</button>
         </div>
         <div class="col">
           <div class="d-flex justify-content-center">
@@ -24,6 +25,7 @@
                 :center="[58.5983, 25.0136]"
                 :zoom="8"
                 @marker-placed="handleMarkerPlaced"
+                @markers-cleared="resetTrailData"
                 :width="'80%'"
                 :height="'720px'"
             />
@@ -57,8 +59,8 @@ export default {
     };
   },
 
-  created() { // Правильное место для жизненного цикла created
-    this.newTrail.profileId = sessionStorage.getItem('profileId') || 0; // Добавлено || 0 для обработки случаев, когда sessionStorage не содержит profileId
+  created() {
+    this.newTrail.profileId = sessionStorage.getItem('profileId');
   },
   methods: {
     handleMarkerPlaced(markerData) {
@@ -74,6 +76,20 @@ export default {
           sequence: this.newTrail.locationStopDtos.length + 1
         });
       }
+    },
+    goHome() {
+      // Сброс данных формы
+      this.resetTrailData();
+
+      // Перенаправление на главную страницу
+      this.$router.push('/');
+    },
+
+    resetTrailData() {
+      this.newTrail.startName = "Start Point";
+      this.newTrail.startLatitude = 0;
+      this.newTrail.startLongitude = 0;
+      this.newTrail.locationStopDtos = [];
     },
     submitTrail() {
       console.log("Submitting trail with data:", this.newTrail);
