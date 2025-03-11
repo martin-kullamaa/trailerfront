@@ -10,21 +10,22 @@
             <div class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
-            <label for="trailDescription" class="form-label text-start d-block">Description</label>
-            <textarea v-model="newTrail.trailDescription" class="form-control"
-                      :class="{'is-invalid': showErrors && !newTrail.trailDescription}"
-                      id="trailDescription" rows="10"></textarea>
-            <div class="invalid-feedback"></div>
-          </div>
-          <div class="mb-3">
             <label for="trailLength" class="form-label text-start d-block">Trail length</label>
 
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" style="max-width: 150px;">
               <input v-model="newTrail.trailLength" :class="{'is-invalid': showErrors && !newTrail.trailLength}" type="text" class="form-control" aria-describedby="basic-addon2">
               <span class="input-group-text" id="basic-addon2">km</span>
             </div>
           </div>
-          <button @click="goHome" class="btn btn-success mt-2 w-40 me-2">Back</button>
+          <div class="mb-3">
+            <label for="trailDescription" class="form-label text-start d-block">Description</label>
+            <textarea v-model="newTrail.trailDescription" class="form-control"
+                      :class="{'is-invalid': showErrors && !newTrail.trailDescription}"
+                      id="trailDescription" rows="12"></textarea>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <button @click="goHome" class="btn btn-success mt-2 w-40 me-3">Back</button>
           <button @click="submitTrail" type="submit" class="btn btn-success mt-2 w-40">Continue</button>
 
         </div>
@@ -104,17 +105,25 @@ export default {
       this.showErrors = true;
       this.errorMessage = "";
 
+      // Kontrollime, kas kõik vajalikud väljad on täidetud
+      if (!this.newTrail.trailName || !this.newTrail.trailLength || !this.newTrail.trailDescription ||
+          this.newTrail.startLatitude === 0 || this.newTrail.startLongitude === 0) {
+        this.errorMessage = "Palun täida kõik kohustuslikud väljad!";
+        return; // Lõpetab funktsiooni täitmise, kui väljad pole täidetud
+      }
+
       TrailService.sendPostTrailRequest(this.newTrail)
           .then(response => {
-            const newTrailId = response.data
+            const newTrailId = response.data;
             alert('Trail successfully added!');
-            NavigationService.navigateToNewTrailDetailsView(newTrailId)
+            NavigationService.navigateToNewTrailDetailsView(newTrailId);
           })
           .catch(error => {
             console.error('There was an error!', error.response ? error.response.data : error);
             alert('Failed to add trail.');
           });
     }
+
 
   }
 }
