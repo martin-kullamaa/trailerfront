@@ -1,13 +1,15 @@
 <template>
-  <div class="d-flex justify-content-center">
-    <MapComponent
-        :markers="locationStarts"
-        :width="'80%'"
-        :height="'720px'"
-        :center="[58.5983, 25.0136]"
-        :zoom="8"
-    />
-  </div>
+
+    <div class="d-flex justify-content-center">
+      <MapComponent
+          :markers="locationStarts"
+          :width="'80%'"
+          :height="'720px'"
+          :center="[58.5983, 25.0136]"
+          :zoom="8"
+      />
+    </div>
+
 </template>
 
 <script>
@@ -20,6 +22,7 @@ export default {
   components: {MapComponent},
   data() {
     return {
+      profileId: 0,
       locationStarts: [{
         name: '',
         latitude: 0,
@@ -37,11 +40,16 @@ export default {
 
     navigateToNewTrailView() {
       NavigationService.navigateToNewTrailView()
+    },
+
+    setProfileId() {
+      this.profileId = parseInt(sessionStorage.getItem('profileId'), 10) || 0
     }
 
   },
   beforeMount() {
     this.sendLocationStartsRequest()
+    this.setProfileId()
   }
 }
 </script>
