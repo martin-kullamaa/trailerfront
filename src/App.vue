@@ -21,8 +21,9 @@
         <router-link to="/login">Log in</router-link>
       </template>
 
-      <router-view @event-update-nav-menu="updateNavMenu"/>
     </nav>
+
+    <router-view @event-update-nav-menu="updateNavMenu"/>
 
   </div>
 </template>
@@ -79,6 +80,11 @@ export default {
     document.body.style.backgroundRepeat = 'no-repeat';
     document.body.style.backgroundPosition = 'center';
     document.body.style.backgroundColor = 'black';
+  },
+  watch: {
+    $route() {
+      this.updateNavMenu();
+    }
   }
 };
 </script>
