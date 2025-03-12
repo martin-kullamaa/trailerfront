@@ -128,7 +128,10 @@ export default {
 
         this.markers.forEach(marker => {
           if (marker.latitude === 0 && marker.longitude === 0) return;
-          L.marker([marker.latitude, marker.longitude], { icon: customIcon }).addTo(this.map);
+          const markerObj = L.marker([marker.latitude, marker.longitude], { icon: customIcon }).addTo(this.map);
+          markerObj.on('click', () => {
+            this.$emit('marker-clicked', marker.startId);
+          });
         });
       }
     },

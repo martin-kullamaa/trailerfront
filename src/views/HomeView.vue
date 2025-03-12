@@ -9,8 +9,8 @@
         :zoom="8"
         :types="types"
         @filter-selected="filterByType"
+        @marker-clicked="handleMarkerClicked($event)"
     />
-    <button>jhgjhg</button>
   </div>
 
 </template>
@@ -26,6 +26,7 @@ export default {
   components: {MapComponent},
   data() {
     return {
+      selectedStartId: 0,
       profileId: 0,
       locationStarts: [{
         locationId: 0,
@@ -56,6 +57,11 @@ export default {
 
     },
 
+    handleMarkerClicked(startId) {
+
+      NavigationService.navigateToTrailView(startId)
+    },
+
     getTypes() {
       TypeService.sendGetTypesRequest()
           .then(response => this.types = response.data)
@@ -66,10 +72,6 @@ export default {
       LocationService.sendLocationStartsRequest()
           .then(response => this.locationStarts = response.data)
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
-    },
-
-    navigateToNewTrailView() {
-      NavigationService.navigateToNewTrailView()
     },
 
     setProfileId() {
