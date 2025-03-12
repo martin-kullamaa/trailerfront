@@ -8,6 +8,8 @@
       <div class="col">
         <div class="d-flex justify-content-center">
           <MapComponent
+              :markers="trailMarkers"
+              :useCustomMarkers="true"
               :center="[58.5983, 25.0136]"
               :zoom="8"
               :width="'100%'"
@@ -46,6 +48,27 @@ export default {
           }
         ]
       }
+    }
+  },
+  computed: {
+    trailMarkers() {
+      const markers = [];
+      markers.push({
+        name: this.trail.startName,
+        latitude: this.trail.startLatitude,
+        longitude: this.trail.startLongitude,
+        sequence: 0
+      })
+      if (this.trail.locationStopDtos.length > 0) {
+        this.trail.locationStopDtos.forEach(locationStop => {
+          markers.push({
+            latitude: locationStop.latitude,
+            longitude: locationStop.longitude,
+            sequence: locationStop.sequence
+          })
+        })
+      }
+      return markers;
     }
   },
   methods: {
