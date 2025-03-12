@@ -10,6 +10,7 @@
         :types="types"
         @filter-selected="filterByType"
     />
+    <button>jhgjhg</button>
   </div>
 
 </template>
