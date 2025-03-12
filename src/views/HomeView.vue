@@ -36,20 +36,20 @@ export default {
     // todo: MapComponent needs to emit what to filter by based on the dropdown items clicked
     // todo: HoveView needs to send axiosGet request with parameter typeId (swagger)
 
-    getLocation() {
-      return axios.get('/location/type', {
-            params: {
-              typeId : typeId()
-            }
-          }
-      );
-    },
+    // getLocation() {
+    //   return axios.get('/location/type', {
+    //         params: {
+    //           typeId : typeId()
+    //         }
+    //       }
+    //   );
+    // },
 
-    sendLocationStartFilter() {
-      this.getLocation()
-          .then(response => this.locationStarts() = response.data)
-          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
-    },
+    // sendLocationStartFilter() {
+    //   this.getLocation()
+    //       .then(response => this.locationStarts() = response.data)
+    //       .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    // },
 
     sendLocationStartsRequest() {
       LocationService.sendLocationStartsRequest()

@@ -2,7 +2,24 @@
   <div class="container text-center">
     <div class="row">
       <div class="col">
-        Column
+        <div class="card transparent-card mb-3">
+          <h6 class="mt-2">Added type(s):</h6>
+          <div class="container text-center">
+            <div class="row">
+              PEALKIRI
+            </div>
+            <div class="row">
+              alguspunkti nimi
+            </div>
+            <div class="row">
+              DESCIPTION DESCIPTION DESCIPTION DESCIPTION
+              DESCIPTION DESCIPTION DESCIPTION DESCIPTION
+              DESCIPTION DESCIPTION DESCIPTION DESCIPTION
+              DESCIPTION DESCIPTION DESCIPTION DESCIPTION
+            </div>
+
+          </div>
+        </div>
       </div>
 
       <div class="col">
@@ -16,6 +33,7 @@
               :height="'620px'"
           />
         </div>
+
       </div>
     </div>
   </div>

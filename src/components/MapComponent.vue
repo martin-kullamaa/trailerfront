@@ -13,15 +13,25 @@
           Filter by
         </button>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">On Foot</a></li>
-          <li><a class="dropdown-item" href="#">Bicycle</a></li>
-          <li><a class="dropdown-item" href="#">Motorcycle</a></li>
+
+          SEDA ON VAJA LOOPIDA VASTAVALT GET REQUESTILE
+          <li><a class="dropdown-item" href="#">SIIA TULEB ANDMEBAASIST DÜNAAMILISELT typeName</a></li>
+
         </ul>
       </div>
     </div>
   </div>
 </template>
 
+
+<!--todo: Get request /type, toob ära selle:-->
+<!--[-->
+<!--  {-->
+<!--    "typeId": 0,-->
+<!--    "name": "string"-->
+<!--  }-->
+<!--]-->
+<!--selle abil vaja genereerida dropdown-->
 
 <script>
 import L from 'leaflet'
