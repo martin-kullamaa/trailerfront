@@ -13,7 +13,9 @@
           Filter by
         </button>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">On Foot</a></li>
+          <li><a class="dropdown-item" href="#">Bicycle</a></li>
+          <li><a class="dropdown-item" href="#">Motorcycle</a></li>
         </ul>
       </div>
     </div>
