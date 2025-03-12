@@ -1,14 +1,14 @@
 <template>
 
-    <div class="d-flex justify-content-center">
-      <MapComponent
-          :markers="locationStarts"
-          :width="'80%'"
-          :height="'720px'"
-          :center="[58.5983, 25.0136]"
-          :zoom="8"
-      />
-    </div>
+  <div class="d-flex justify-content-center">
+    <MapComponent
+        :markers="locationStarts"
+        :width="'80%'"
+        :height="'720px'"
+        :center="[58.5983, 25.0136]"
+        :zoom="8"
+    />
+  </div>
 
 </template>
 
@@ -35,18 +35,19 @@ export default {
     // todo: MapComponent needs to emit what to filter by based on the dropdown items clicked
     // todo: HoveView needs to send axiosGet request with parameter typeId (swagger)
 
-    sendLocationStartFilter() {
-      axios.get('/location/type', {
+    getLocation() {
+      return axios.get('/location/type', {
             params: {
-              typeId: this.someDataBlockVariable1,
-              someRequestParam2: this.someDataBlockVariable2
+              typeId : typeId()
             }
           }
-      ).then(response => {
-        this.someDataBlockResponseObject = response.data
-      }).catch(error => {
-        this.someDataBlockErrorResponseObject = error.response.data
-      })
+      );
+    },
+
+    sendLocationStartFilter() {
+      this.getLocation()
+          .then(response => this.locationStarts() = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
     sendLocationStartsRequest() {
