@@ -32,6 +32,11 @@ const routes = [
     name: 'newTrailRoute',
     component: NewTrailView
   },
+    // todo: vaja saada locationStartId HomeView'st (MapComponentist emittida) ja see anda kaasa
+    // todo: allolevale view'le.
+    // todo: IF click on marker on MapComponent (child of HomeView)
+    // todo: MapComponent emit what startingpoint marker was clicked to HomeView
+    // todo: HomeView PUSH to TrailView and give locationStartId along
   {
     path: '/trail/:startId',
     name: 'trailRoute',
