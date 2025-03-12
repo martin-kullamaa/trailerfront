@@ -7,6 +7,8 @@
         :height="'720px'"
         :center="[58.5983, 25.0136]"
         :zoom="8"
+        :types="types"
+        @filter-selected="filterByType"
     />
   </div>
 
@@ -16,6 +18,7 @@
 import LocationService from "@/service/LocationService";
 import MapComponent from "@/components/MapComponent.vue";
 import NavigationService from "@/service/NavigationService";
+import TypeService from "@/service/TypeService";
 
 export default {
   name: "HomeView",
@@ -28,28 +31,35 @@ export default {
         name: '',
         latitude: 0,
         longitude: 0
-      }]
+      }],
+      types: {
+        typeId: 0,
+        name: ''
+      }
     }
   },
   methods: {
 
-    // todo: MapComponent needs to emit what to filter by based on the dropdown items clicked
-    // todo: HoveView needs to send axiosGet request with parameter typeId (swagger)
+    filterByType(typeId) {
+      console.log("Selected typeId:", typeId);
 
-    // getLocation() {
-    //   return axios.get('/location/type', {
-    //         params: {
-    //           typeId : typeId()
-    //         }
-    //       }
-    //   );
-    // },
+      LocationService.sendFilteredLocationRequest(typeId)
+          .then(response => {
+            this.locationStarts = response.data; // Uuendab asukohtade loendi
+            console.log("Filtered markers:", this.locationStarts); // Logi uus asukohtade loend
+            // Siin saad uuendada ka kaarti markerite järgi
+          })
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
 
-    // sendLocationStartFilter() {
-    //   this.getLocation()
-    //       .then(response => this.locationStarts() = response.data)
-    //       .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
-    // },
+      // todo:edasta MapComponentile uus startLocation array
+
+    },
+
+    getTypes() {
+      TypeService.sendGetTypesRequest()
+          .then(response => this.types = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
 
     sendLocationStartsRequest() {
       LocationService.sendLocationStartsRequest()
@@ -69,6 +79,7 @@ export default {
   beforeMount() {
     this.sendLocationStartsRequest()
     this.setProfileId()
+    this.getTypes()
   }
 }
 </script>
