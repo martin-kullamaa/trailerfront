@@ -12,26 +12,18 @@
         <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown">
           Filter by
         </button>
+
         <ul class="dropdown-menu">
-
-          SEDA ON VAJA LOOPIDA VASTAVALT GET REQUESTILE
-          <li><a class="dropdown-item" href="#">SIIA TULEB ANDMEBAASIST DÜNAAMILISELT typeName</a></li>
-
+          <li v-for="type in types" :key="type.typeId">
+            <a class="dropdown-item pointer" @click="emitFilter(type.typeId)">{{ type.name }}</a>
+          </li>
         </ul>
+
+
       </div>
     </div>
   </div>
 </template>
-
-
-<!--todo: Get request /type, toob ära selle:-->
-<!--[-->
-<!--  {-->
-<!--    "typeId": 0,-->
-<!--    "name": "string"-->
-<!--  }-->
-<!--]-->
-<!--selle abil vaja genereerida dropdown-->
 
 <script>
 import L from 'leaflet'
@@ -42,6 +34,10 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 
 export default {
   props: {
+    types: {
+      type: Array,
+      default: () => []
+    },
     center: {type: Array, default: () => [0, 0]},
     zoom: {type: Number, default: 0},
     markers: {
@@ -70,6 +66,10 @@ export default {
     }
   },
   methods: {
+
+    emitFilter(typeId) {
+      this.$emit('filter-selected', typeId);
+    },
 
     initializeMap() {
 
