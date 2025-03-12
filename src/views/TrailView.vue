@@ -4,11 +4,16 @@
       <div class="col">
         Column
       </div>
+
       <div class="col">
-        Column
-      </div>
-      <div class="col">
-        Column
+        <div class="d-flex justify-content-center">
+          <MapComponent
+              :center="[58.5983, 25.0136]"
+              :zoom="8"
+              :width="'100%'"
+              :height="'620px'"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -16,9 +21,11 @@
 
 <script>
 import TrailService from "@/service/TrailService";
+import MapComponent from "@/components/MapComponent.vue";
 
 export default {
   name: "TrailView",
+  components: {MapComponent},
   data() {
     return {
       startId: this.$route.params.startId,
