@@ -3,21 +3,41 @@
     <div class="row">
       <div class="col">
         <div class="card transparent-card mb-3">
-          <h6 class="mt-2">Added type(s):</h6>
           <div class="container text-center">
+
             <div class="row">
-              PEALKIRI
-            </div>
-            <div class="row">
-              alguspunkti nimi
-            </div>
-            <div class="row">
-              DESCIPTION DESCIPTION DESCIPTION DESCIPTION
-              DESCIPTION DESCIPTION DESCIPTION DESCIPTION
-              DESCIPTION DESCIPTION DESCIPTION DESCIPTION
-              DESCIPTION DESCIPTION DESCIPTION DESCIPTION
+              <h1>{{ trail.trailName }}</h1>
             </div>
 
+            <div class="row">
+              <h3>{{ trail.startName }}</h3>
+            </div>
+            <h6 class="mt-2 text-start">Description:</h6>
+            <div class="row">
+              <p class="text-start">{{ trail.trailDescription }}</p>
+            </div>
+
+          </div>
+        </div>
+        <div class="card transparent-card">
+          <h6 class="mt-2">Added equipment:</h6>
+          <div class="container text-center">
+          <span v-for="trailEquipment in trailEquipment" :key="trailEquipment.equipmentId"
+                @click="deleteTrailEquipment(trailEquipment.equipmentId)"
+                class="badge text-bg-success custom-badge pointer me-3">
+                {{ trailEquipment.name }}
+          </span>
+          </div>
+          <div class="d-flex align-items-center justify-content-center flex-wrap py-2">
+            <div class="mx-2">
+              <span class="badge text-bg-success custom-badge">Type(s):</span>
+            </div>
+            <div v-for="trailType in trailTypes" :key="trailType.typeId" class="mx-2">
+              <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon small"/>
+            </div>
+            <div class="mx-2">
+              <span class="badge text-bg-success custom-badge">Trail length: {{ trail.trailLength }}km</span>
+            </div>
           </div>
         </div>
       </div>
@@ -34,14 +54,39 @@
           />
         </div>
 
+
+
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <div class="card transparent-card mb-3">
+          <div class="card-body">
+            <h6 class="mt-2">Added picture(s):</h6>
+            <!-- Picture content here -->
+            <div v-if="trailPictures.length > 0" class="mt-3">
+              <div class="container">
+                <div v-for="(pic, index) in trailPictures" :key="index"
+                     class="d-flex align-items-center py-2 border-bottom">
+                  <img :src="pic.data" alt="picture" class="img-thumbnail"
+                       style="width: 100px; height: 100px; object-fit: cover;">
+                  <span class="ms-3 flex-grow-1 small">{{ pic.name }}</span>
+                  <button @click="removePicture(index)" class="btn btn-sm btn-outline-danger">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
 import TrailService from "@/service/TrailService";
 import MapComponent from "@/components/MapComponent.vue";
+import PictureService from "@/service/PictureService";
 
 export default {
   name: "TrailView",
@@ -65,7 +110,19 @@ export default {
             sequence: 0
           }
         ]
-      }
+      },
+      trailTypes: [{
+        typeId: 0,
+        name: ''
+      }],
+      trailEquipment: [{
+        equipmentId: 0,
+        name: ''
+      }],
+      trailPictures: [{
+        data: '',
+        name: ''
+      }],
     }
   },
   computed: {
@@ -97,9 +154,50 @@ export default {
           .then(response => this.trail = response.data)
           .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
+
+    getTrailTypes() {
+      TrailService.sendGetTrailTypeRequest(this.trail.trailId)
+          .then(response => this.trailTypes = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+    getTrailEquipment() {
+      TrailService.sendGetTrailEquipmentRequest(this.trail.trailId)
+          .then(response => this.trailEquipment = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+    getTrailPictures() {
+      PictureService.sendGetPicturesRequest(this.trail.trailId)
+          .then(response => this.trailPictures = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
+    getTypeIcon(typeId) {
+      const id = Number(typeId);
+      switch (id) {
+        case 1:
+          return ['fas', 'person-hiking'];
+        case 2:
+          return ['fas', 'bicycle'];
+        case 3:
+          return ['fas', 'motorcycle'];
+        default:
+          return ['fas', 'question-circle'];
+      }
+    },
   },
   beforeMount() {
     this.getTrail()
+  },
+  watch: {
+    'trail.trailId'(newTrailId) {
+      if (newTrailId && newTrailId !== 0) {
+        this.getTrailTypes()
+        this.getTrailEquipment()
+        this.getTrailPictures()
+      }
+    }
   }
 }
 </script>
