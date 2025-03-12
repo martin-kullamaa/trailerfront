@@ -2,6 +2,6 @@ import axios from "axios";
 
 export default {
     sendLocationStartsRequest() {
-        return axios.get('/home');
+        return axios.get('/location/start');
     },
 }

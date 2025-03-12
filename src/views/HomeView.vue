@@ -24,6 +24,7 @@ export default {
     return {
       profileId: 0,
       locationStarts: [{
+        locationId: 0,
         name: '',
         latitude: 0,
         longitude: 0

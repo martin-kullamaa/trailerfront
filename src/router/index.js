@@ -4,6 +4,7 @@ import HomeView from "@/views/HomeView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import TrailDetailsView from "@/views/TrailDetailsView.vue";
 import NewTrailView from "@/views/NewTrailView.vue";
+import TrailView from "@/views/TrailView.vue";
 
 
 const routes = [
@@ -28,8 +29,13 @@ const routes = [
   },
   {
     path: '/trail',
-    name: 'trailRoute',
+    name: 'newTrailRoute',
     component: NewTrailView
+  },
+  {
+    path: '/trail/:startId',
+    name: 'trailRoute',
+    component: TrailView
   },
   {
     path: '/trail-details/:trailId',

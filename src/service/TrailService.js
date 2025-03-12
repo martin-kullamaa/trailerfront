@@ -5,6 +5,15 @@ export default {
         return axios.post('/trail', newTrail);
     },
 
+    sendGetTrailRequest(startId) {
+        return axios.get('/trail', {
+                params: {
+                    startId: startId,
+                }
+            }
+        );
+    },
+
     sendGetTrailTypeRequest(trailId) {
         return axios.get('/trail/type', {
                 params: {
