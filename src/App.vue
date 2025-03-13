@@ -88,20 +88,3 @@ export default {
   }
 };
 </script>
-
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-}
-
-.app-content {
-  position: relative;
-  z-index: 1;
-  color: white;
-  font-size: 2rem;
-}
-</style>

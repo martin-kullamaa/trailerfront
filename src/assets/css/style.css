@@ -149,6 +149,8 @@ body {
     height: 100vh;
     width: 100vw;
     overflow: hidden;
+    scroll-behavior: smooth; /* Tagab sujuva kerimise */
+    overflow: auto; /* Tagab, et lehte saab kerida */
 }
 
 .app-content {

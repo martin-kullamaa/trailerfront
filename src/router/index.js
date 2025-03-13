@@ -45,8 +45,18 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  history: createWebHistory(),
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      // Kui kasutaja vajutab "Tagasi" nuppu, taastab eelmise positsiooni
+      return { ...savedPosition, behavior: "smooth" };
+    } else {
+      // Vaikimisi kerib lehe algusesse
+      return { top: 0, behavior: "smooth" };
+    }
+  }
+});
+
 
 export default router
