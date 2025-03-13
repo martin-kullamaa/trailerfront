@@ -31,10 +31,10 @@
                 <div class="mx-2">
                   <span class="badge text-bg-success custom-badge">Type(s):</span>
                 </div>
-                <div v-for="trailType in trailTypes" :key="trailType.typeId" class="mx-2">
+                <div v-for="trailType in trailTypes" :key="trailType.typeId" class="mx-2 d-block w-100">
                   <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon small"/>
                 </div>
-                <div class="mx-2">
+                <div class="mx-2 d-block w-100">
                   <span class="badge text-bg-success custom-badge">Trail length: {{ trail.trailLength }}km</span>
                 </div>
               </div>
