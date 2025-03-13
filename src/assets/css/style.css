@@ -178,12 +178,13 @@ div.custom-alert {
     font-size: 21px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    padding: 15px;
-    margin-top: 20px !important; /* Ülemine vahemaa 20px */
+    padding: 10px;
     background-color: rgb(143, 47, 30) !important; /* Tausta poolläbipaistev */
     color: #f5c6cb; /* Roosa tekst */
     border: 2px solid #f5c6cb; /* Paksem roosa piirjoon */
 }
-
+.transparent-card {
+    padding: 17px;
+}
 
 
