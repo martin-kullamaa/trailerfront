@@ -9,7 +9,7 @@
         :zoom="8"
         :types="types"
         @filter-selected="filterByType"
-        @marker-clicked="handleMarkerClicked($event)"
+        @marker-clicked="handleMarkerClicked"
     />
   </div>
 
@@ -43,22 +43,20 @@ export default {
   methods: {
 
     filterByType(typeId) {
-      console.log("Selected typeId:", typeId);
-
-      LocationService.sendFilteredLocationRequest(typeId)
-          .then(response => {
-            this.locationStarts = response.data; // Uuendab asukohtade loendi
-            console.log("Filtered markers:", this.locationStarts); // Logi uus asukohtade loend
-            // Siin saad uuendada ka kaarti markerite järgi
-          })
-          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
-
-      // todo:edasta MapComponentile uus startLocation array
-
+      if (typeId === null) {
+        this.sendLocationStartsRequest();
+      } else {
+        LocationService.sendFilteredLocationRequest(typeId)
+            .then(response => {
+              this.locationStarts = response.data;
+            })
+            .catch(error => {
+              console.error(error.response.data);
+            });
+      }
     },
 
     handleMarkerClicked(startId) {
-
       NavigationService.navigateToTrailView(startId)
     },
 

@@ -13,6 +13,9 @@
           <li v-for="type in types" :key="type.typeId">
             <a class="dropdown-item pointer" @click="emitFilter(type.typeId)">{{ type.name }}</a>
           </li>
+          <li>
+            <a class="dropdown-item pointer" @click="emitFilter(null)">all</a>
+          </li>
         </ul>
       </div>
     </div>
