@@ -137,6 +137,7 @@ nav > a, .nav-button {
     cursor: pointer;
     font-size: 2rem;
     padding: 5px 10px;
+    margin-right: 30px; /* Muuda vahet suuremaks või väiksemaks */
 }
 
 nav a.router-link-exact-active, .nav-button:hover {

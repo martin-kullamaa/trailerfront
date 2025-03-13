@@ -8,12 +8,12 @@
   <div class="app-content">
     <nav>
       <!-- "About" nupp, mis avab modaali -->
-      <button @click="openAboutModal" class="nav-button">About</button> |
-      <router-link to="/">Map</router-link> |
+      <button @click="openAboutModal" class="nav-button">About</button>
+      <router-link to="/">Map</router-link>
 
 
       <template v-if="isLoggedIn">
-        <router-link to="/trail">Add New Trail</router-link> |
+        <router-link to="/trail">Add New Trail</router-link>
         <button @click="openLogOutModal" class="nav-button">Log out</button>
       </template>
 
