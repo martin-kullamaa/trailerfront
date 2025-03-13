@@ -29,7 +29,7 @@
               </div>
               <div class="d-flex align-items-center justify-content-center flex-wrap py-2">
                 <div class="mx-2">
-                  <span class="badge text-bg-success custom-badge">Type(s):</span>
+                  <span class="badge text-bg-success custom-badge">Type:</span>
                 </div>
                 <div v-for="trailType in trailTypes" :key="trailType.typeId" class="mx-2 d-block w-100">
                   <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon small"/>
