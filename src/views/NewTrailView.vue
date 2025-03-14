@@ -57,6 +57,7 @@ export default {
   components: { MapComponent },
   data() {
     return {
+      startId: this.$route.params.startId,
       showErrors: false,
       errorMessage: "",
       newTrail: {
@@ -71,11 +72,23 @@ export default {
       }
     };
   },
-
   created() {
     this.newTrail.profileId = sessionStorage.getItem('profileId');
+
+    if (this.startId) {
+      this.loadTrail();
+    }
   },
   methods: {
+
+
+    // Loading created trail data for editing
+    loadTrail() {
+      TrailService.sendGetTrailRequest(this.startId)
+          .then(response => this.newTrail = response.data)
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
+
     handleMarkerPlaced(markerData) {
       if (this.newTrail.startLatitude === 0 && this.newTrail.startLongitude === 0) {
         // Setting the startname
