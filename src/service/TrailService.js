@@ -16,6 +16,10 @@ export default {
         );
     },
 
+    sendPutTrailRequest(trail) {
+        return axios.put('/trail', trail);
+    },
+
     sendGetTrailTypeRequest(trailId) {
         return axios.get('/trail/type', {
                 params: {

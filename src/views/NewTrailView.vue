@@ -28,7 +28,9 @@
           </div>
 
           <button @click="goHome" class="btn btn-success mt-2 w-40 me-3">Back</button>
-          <button @click="submitTrail" type="submit" class="btn btn-success mt-2 w-40">Continue</button>
+
+          <button @click="submitTrail" v-if="startId === 0" type="submit" class="btn btn-success mt-2 w-40">Continue</button>
+          <button @click="changeTrail" v-if="startId !== 0" type="submit" class="btn btn-success mt-2 w-40">Save changes</button>
 
         </div>
         <div class="col">
@@ -61,7 +63,7 @@ export default {
   components: { MapComponent },
   data() {
     return {
-      startId: this.$route.params.startId,
+      startId: this.$route.params.startId || 0,
       showErrors: false,
       errorMessage: "",
       newTrail: {
@@ -111,7 +113,7 @@ export default {
   methods: {
 
 
-    // Loading created trail data for editing
+    // THIS DATA IS LOADED IF this.startID === true.
     loadTrail() {
       TrailService.sendGetTrailRequest(this.startId)
           .then(response => this.newTrail = response.data)
@@ -158,11 +160,35 @@ export default {
           .then(response => {
             const newTrailId = response.data;
             alert('Trail successfully added!');
-            NavigationService.navigateToNewTrailDetailsView(newTrailId);
+            NavigationService.navigateToTrailDetailsView(newTrailId);
           })
           .catch(error => {
             console.error('There was an error!', error.response ? error.response.data : error);
             alert('Failed to add trail.');
+          });
+    },
+
+    changeTrail() {
+
+      this.showErrors = true;
+      this.errorMessage = "";
+
+      // Kontrollime, kas kõik vajalikud väljad on täidetud
+      if (!this.newTrail.trailName || !this.newTrail.trailLength || !this.newTrail.trailDescription ||
+          this.newTrail.startLatitude === 0 || this.newTrail.startLongitude === 0) {
+        this.errorMessage = "Palun täida kõik kohustuslikud väljad!";
+        return; // Lõpetab funktsiooni täitmise, kui väljad pole täidetud
+      }
+
+      TrailService.sendPutTrailRequest(this.newTrail)
+          .then(response => {
+            const editedTrailId = response.data;
+            alert('Trail successfully updated!');
+            NavigationService.navigateToTrailDetailsView(editedTrailId);
+          })
+          .catch(error => {
+            console.error('There was an error!', error.response ? error.response.data : error);
+            alert('Failed to update trail.');
           });
     }
 
