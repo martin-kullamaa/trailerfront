@@ -1,7 +1,7 @@
 <template>
   <div class="map-wrapper" :style="{ width: width, height: height }">
     <div ref="mapContainer" class="map-container" style="width: 100%; height: 100%;"></div>
-    <button v-if="isTrailPage" @click="clearMarkers" class="btn btn-danger clear-markers-btn">
+    <button v-if="isTrailPage || isEditPage" @click="clearMarkers" class="btn btn-danger clear-markers-btn">
       Clear Markers
     </button>
     <div v-else-if="isHomePage" class="map-overlay-dropdown">
@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     isTrailPage() {
-      return this.$route.path === '/trail';
+      return this.$route.path === '/trail' || this.$route.path.startsWith('/edit-trail/')
     },
     isHomePage() {
       return this.$route.path === '/';
@@ -82,10 +82,14 @@ export default {
           this.userMarkers.push(newMarker);
 
           const coordinates = this.userMarkers.map(marker => marker.getLatLng());
-          if (this.trailPolyline) {
-            this.trailPolyline.setLatLngs(coordinates);
-          } else {
-            this.trailPolyline = L.polyline(coordinates, { color: 'blue' }).addTo(this.map);
+
+          // Only update or create polyline if there are at least two points
+          if (coordinates.length > 1) {
+            if (this.trailPolyline) {
+              this.trailPolyline.setLatLngs(coordinates);
+            } else {
+              this.trailPolyline = L.polyline(coordinates, { color: 'blue' }).addTo(this.map);
+            }
           }
 
           this.$emit('marker-placed', { lat: e.latlng.lat, lng: e.latlng.lng });
@@ -111,8 +115,7 @@ export default {
           });
           L.marker([marker.latitude, marker.longitude], { icon: customIcon }).addTo(this.map);
         });
-
-        // Uuenda polüliin
+        // Update polyline
         const coordinates = this.markers.map(marker => L.latLng(marker.latitude, marker.longitude));
         if (this.trailPolyline) {
           this.trailPolyline.setLatLngs(coordinates);

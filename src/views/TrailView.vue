@@ -40,14 +40,17 @@
             </div>
           </div>
         </div>
+
         <div>
           <button @click="goToEdit(startId)" class="btn btn-success mt-2 w-40 me-3">Edit</button>
         </div>
+
       </div>
 
       <div class="col">
         <div class="d-flex justify-content-center">
           <MapComponent
+
               :markers="trailMarkers"
               :useCustomMarkers="true"
               :center="[58.5983, 25.0136]"

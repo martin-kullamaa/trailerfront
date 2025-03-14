@@ -32,6 +32,8 @@
         <div class="col">
           <div class="d-flex justify-content-center">
             <MapComponent
+                :useCustomMarkers="true"
+                :markers="trailMarkers"
                 :clickToAddMarker="true"
                 :center="[58.5983, 25.0136]"
                 :zoom="8"
@@ -77,6 +79,31 @@ export default {
 
     if (this.startId) {
       this.loadTrail();
+    }
+  },
+  computed: {
+    trailMarkers() {
+      const markers = [];
+      // Add start marker if available
+      if (this.newTrail.startLatitude !== 0 || this.newTrail.startLongitude !== 0) {
+        markers.push({
+          latitude: this.newTrail.startLatitude,
+          longitude: this.newTrail.startLongitude,
+          sequence: 0,
+          name: this.newTrail.startName
+        });
+      }
+      // Add stop markers
+      if (this.newTrail.locationStopDtos && this.newTrail.locationStopDtos.length > 0) {
+        this.newTrail.locationStopDtos.forEach(stop => {
+          markers.push({
+            latitude: stop.latitude,
+            longitude: stop.longitude,
+            sequence: stop.sequence
+          });
+        });
+      }
+      return markers;
     }
   },
   methods: {

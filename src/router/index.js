@@ -33,10 +33,10 @@ const routes = [
     component: NewTrailView
   },
   {
-    path: '/new-trail/:startId',
+    path: '/edit-trail/:startId',
     name: 'EditTrail',
     component: NewTrailView,
-    props: true
+    // props: true
   },
   {
     path: '/trail/:startId',
