@@ -13,7 +13,7 @@
 
 
       <template v-if="isLoggedIn">
-        <router-link to="/trail">Add New Trail</router-link>
+        <router-link v-if="$route.name !== 'EditTrail'" to="/trail">Add New Trail</router-link>
         <button @click="openLogOutModal" class="nav-button">Log out</button>
       </template>
 
