@@ -102,6 +102,7 @@ import TrailViewPictureModal from "@/components/modal/TrailViewPictureModal.vue"
 import TrailService from "@/service/TrailService";
 import MapComponent from "@/components/MapComponent.vue";
 import PictureService from "@/service/PictureService";
+import NavigationService from "@/service/NavigationService";
 
 export default {
   name: "TrailView",
@@ -168,18 +169,15 @@ export default {
   },
   methods: {
 
-    someMethodName() {
-      axios.delete('/some/path', {
-            params: {
-              someRequestParam1: this.someDataBlockVariable1,
-              someRequestParam2: this.someDataBlockVariable2
-            }
-          }
-      ).then(response => {
-        this.someDataBlockResponseObject = response.data
-      }).catch(error => {
-        this.someDataBlockErrorResponseObject = error.response.data
-      })
+
+
+    handleDelete() {
+      if (!confirm("Are you sure you want to delete this trail?")) {
+        return;
+      }
+      TrailService.sendDeleteTrailRequest(this.startId)
+          .then(() => NavigationService.navigateToHomeView())
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
     },
 
     getTrail() {

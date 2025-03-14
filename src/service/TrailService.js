@@ -20,6 +20,15 @@ export default {
         return axios.put('/trail', trail);
     },
 
+    sendDeleteTrailRequest(startId) {
+        return axios.delete('/trail', {
+                params: {
+                    startId: startId
+                }
+            }
+        );
+    },
+
     sendGetTrailTypeRequest(trailId) {
         return axios.get('/trail/type', {
                 params: {
