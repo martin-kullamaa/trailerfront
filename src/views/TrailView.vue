@@ -1,11 +1,11 @@
 <template>
-  <TrailViewPictureModal
-      :modalIsOpen="isModalOpen"
-      :pic="selectedPicture"
-      :fullScreen="true"
-      @event-close-modal="closePictureModal"
-  />
-
+<!--  <TrailViewPictureModal-->
+<!--      :modalIsOpen="isModalOpen"-->
+<!--      :pic="selectedPicture"-->
+<!--      :fullScreen="true"-->
+<!--      @event-close-modal="closePictureModal"-->
+<!--  />-->
+<!--TODO: DESCRIPTION ASETUS-->
   <div class="container text-center">
     <div class="row">
       <div class="col">
@@ -16,12 +16,12 @@
               <h1>{{ trail.trailName }}</h1>
             </div>
 
-<!--            <div class="row">-->
-<!--              <h3>{{ trail.startName }}</h3>-->
-<!--            </div>-->
+            <!--            <div class="row">-->
+            <!--              <h3>{{ trail.startName }}</h3>-->
+            <!--            </div>-->
             <h6 class="mt-2 text-start">Description:</h6>
             <div>
-              <p class="text-description">{{ trail.trailDescription }}</p>
+              <p class="text-description text-start">{{ trail.trailDescription }}</p>
             </div>
 
           </div>
@@ -36,24 +36,25 @@
           </div>
           <div class="d-flex align-items-center flex-wrap py-2">
             <div class="mx-2" align="left">
-<!--              <span class="badge text-bg-success custom-badge">Type(s):</span>-->
+              <!--              <span class="badge text-bg-success custom-badge">Type(s):</span>-->
               <h6 class="mt-2">Type(s):</h6>
             </div>
             <div v-for="trailType in trailTypes" :key="trailType.typeId" class="mx-2">
               <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon small"/>
             </div>
           </div>
-          <div class="mx-2 d-flex align-items-center">
+          <div class="mx-1 d-flex align-items-center">
             <div><h6 class="mt-2 text-start">Trail length:</h6></div>
             <div><span class="badge text-bg-success custom-badge">{{ trail.trailLength }}km</span></div>
           </div>
         </div>
-
-        <div>
-          <button @click="goToEdit(startId)" class="btn btn-success pointer mt-2 w-40 me-3">Edit trail</button>
-        </div>
-        <div>
-          <button @click="handleDelete()" class="btn btn-danger pointer mt-2 w-40 me-3">Delete trail</button>
+        <div class="d-flex align-items-center">
+          <div>
+            <button @click="goToEdit(startId)" class="btn btn-success pointer mt-2  me-3">Edit trail</button>
+          </div>
+          <div>
+            <button @click="handleDelete()" class="btn btn-danger pointer mt-2  me-3">Delete trail</button>
+          </div>
         </div>
 
       </div>
@@ -85,7 +86,7 @@
                   <div v-for="(pic, index) in trailPictures" :key="index" class="col-4 mb-3">
                     <div class="d-flex flex-column align-items-center">
                       <img :src="pic.data" alt="picture" class="img-thumbnail"
-                           style="width: 190px; height: 190px; object-fit: cover;"
+                           style="width: 350px; height: 350px; object-fit: cover;"
                            @click="openPictureModal(pic)">
                       <span class="mt-2 small">{{ pic.name }}</span>
                     </div>
@@ -172,7 +173,6 @@ export default {
     }
   },
   methods: {
-
 
 
     handleDelete() {
