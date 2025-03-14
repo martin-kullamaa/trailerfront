@@ -14,7 +14,7 @@
             <a class="dropdown-item pointer" @click="emitFilter(type.typeId)">{{ type.name }}</a>
           </li>
           <li>
-            <a class="dropdown-item pointer" @click="emitFilter(null)">all</a>
+            <a class="dropdown-item pointer" @click="emitFilter(null)">clear</a>
           </li>
         </ul>
       </div>
