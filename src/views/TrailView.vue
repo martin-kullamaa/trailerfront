@@ -28,8 +28,7 @@
           <h6 class="mt-2">Added equipment:</h6>
           <div class="container text-center">
           <span v-for="trailEquipment in trailEquipment" :key="trailEquipment.equipmentId"
-                @click="deleteTrailEquipment(trailEquipment.equipmentId)"
-                class="badge text-bg-success custom-badge pointer me-3">
+                class="badge text-bg-success custom-badge me-3">
                 {{ trailEquipment.name }}
           </span>
           </div>
@@ -47,7 +46,10 @@
         </div>
 
         <div>
-          <button @click="goToEdit(startId)" class="btn btn-success mt-2 w-40 me-3">Edit</button>
+          <button @click="goToEdit(startId)" class="btn btn-success pointer mt-2 w-40 me-3">Edit trail</button>
+        </div>
+        <div>
+          <button @click="handleDelete()" class="btn btn-danger pointer mt-2 w-40 me-3">Delete trail</button>
         </div>
 
       </div>
@@ -166,6 +168,19 @@ export default {
   },
   methods: {
 
+    someMethodName() {
+      axios.delete('/some/path', {
+            params: {
+              someRequestParam1: this.someDataBlockVariable1,
+              someRequestParam2: this.someDataBlockVariable2
+            }
+          }
+      ).then(response => {
+        this.someDataBlockResponseObject = response.data
+      }).catch(error => {
+        this.someDataBlockErrorResponseObject = error.response.data
+      })
+    },
 
     getTrail() {
       TrailService.sendGetTrailRequest(this.startId)
