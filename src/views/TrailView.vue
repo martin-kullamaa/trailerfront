@@ -65,16 +65,18 @@
       <div class="col-md-12">
         <div class="card transparent-card mb-3">
           <div class="card-body">
-            <h6 class="mt-2">Added picture(s):</h6>
-            <!-- Picture content here -->
+            <h6 class="mt-2">Lisatud pildid:</h6>
             <div v-if="trailPictures.length > 0" class="mt-3">
               <div class="container">
-                <div v-for="(pic, index) in trailPictures" :key="index"
-                     class="d-flex align-items-center py-2 border-bottom">
-                  <img :src="pic.data" alt="picture" class="img-thumbnail"
-                       style="width: 100px; height: 100px; object-fit: cover;">
-                  <span class="ms-3 flex-grow-1 small">{{ pic.name }}</span>
-                  <button @click="removePicture(index)" class="btn btn-sm btn-outline-danger">Remove</button>
+                <div class="row">
+                  <div v-for="(pic, index) in trailPictures" :key="index" class="col-4 mb-3">
+                    <div class="d-flex flex-column align-items-center">
+                      <img :src="pic.data" alt="picture" class="img-thumbnail"
+                           style="width: 100px; height: 100px; object-fit: cover;">
+                      <span class="mt-2 small">{{ pic.name }}</span>
+                      <button @click="removePicture(index)" class="btn btn-sm btn-outline-danger mt-2">Eemalda</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
