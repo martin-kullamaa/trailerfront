@@ -111,28 +111,34 @@ export default {
         }
       });
 
+      // Clear userMarkers array
+      this.userMarkers = [];
+
       if (this.useCustomMarkers) {
-        this.markers.forEach((marker, index) => {
-          const customIcon = L.divIcon({
-            className: 'custom-marker-icon',
-            html: `<div class="marker-label">${index}</div>`,
-            iconSize: [28, 28],
-            iconAnchor: [1, 30]
+        // If markers prop is provided (e.g. in the edit view), add them to the map and push them into userMarkers
+        if (this.markers && this.markers.length > 0) {
+          this.markers.forEach((marker, index) => {
+            const customIcon = L.divIcon({
+              className: 'custom-marker-icon',
+              html: `<div class="marker-label">${index}</div>`,
+              iconSize: [28, 28],
+              iconAnchor: [1, 30]
+            });
+            const leafletMarker = L.marker([marker.latitude, marker.longitude], { icon: customIcon }).addTo(this.map);
+            this.userMarkers.push(leafletMarker);
           });
-          L.marker([marker.latitude, marker.longitude], {icon: customIcon}).addTo(this.map);
-        });
-        // If not in click-to-add mode, update polyline using markers prop
-        if (!this.clickToAddMarker) {
-          const coordinates = this.markers.map(marker => L.latLng(marker.latitude, marker.longitude));
-          if (coordinates.length > 1) {
-            if (this.polyline) {
-              this.polyline.setLatLngs(coordinates);
-            } else {
-              this.polyline = L.polyline(coordinates, {color: 'blue'}).addTo(this.map);
-            }
+        }
+        // Update polyline connecting all markers (if there are at least two)
+        const coordinates = this.userMarkers.map(marker => marker.getLatLng());
+        if (coordinates.length > 1) {
+          if (this.polyline) {
+            this.polyline.setLatLngs(coordinates);
+          } else {
+            this.polyline = L.polyline(coordinates, { color: 'blue' }).addTo(this.map);
           }
         }
       } else {
+        // Default icon branch (without polyline)
         const defaultIcon = L.icon({
           iconUrl: markerIcon,
           shadowUrl: markerShadow,
@@ -143,7 +149,7 @@ export default {
         });
         this.markers.forEach(marker => {
           if (marker.latitude === 0 && marker.longitude === 0) return;
-          const markerObj = L.marker([marker.latitude, marker.longitude], {icon: defaultIcon}).addTo(this.map);
+          const markerObj = L.marker([marker.latitude, marker.longitude], { icon: defaultIcon }).addTo(this.map);
           markerObj.on('click', () => {
             this.$emit('marker-clicked', marker.startId);
           });

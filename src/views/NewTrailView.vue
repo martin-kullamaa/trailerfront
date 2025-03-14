@@ -59,7 +59,7 @@ export default {
   components: { MapComponent },
   data() {
     return {
-      startId: this.$route.params.startId,
+      startId: this.$route.params.startId || 0,
       showErrors: false,
       errorMessage: "",
       newTrail: {
@@ -109,7 +109,7 @@ export default {
   methods: {
 
 
-    // Loading created trail data for editing
+    // THIS DATA IS LOADED IF this.startID === true.
     loadTrail() {
       TrailService.sendGetTrailRequest(this.startId)
           .then(response => this.newTrail = response.data)
