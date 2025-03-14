@@ -7,8 +7,6 @@
       <p>This is a hiking and adventure planning website for travel enthusiasts and explorers. The trails available here can be completed on foot, by bicycle, or by motorcycle. You can add and share your own trips or find inspiration for your next adventure. Click on the starting points on the map to explore hikes, or log in to add your completed routes with detailed descriptions.</p>
     </template>
 
-
-
   </Modal>
 </template>
 

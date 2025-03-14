@@ -1,14 +1,18 @@
 <template>
-  <Modal :modal-is-open="modalIsOpen" :fullScreen="true" @event-close-modal="closeModal">
+  <Modal
+      :modal-is-open="modalIsOpen"
+      :class="{ 'is-fullscreen': fullScreen }"
+      @event-close-modal="closeModal"
+  >
     <template #body>
-      <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content">
-          <div class="modal-body text-center">
+      <div class="modal-container" :class="{ 'is-fullscreen': fullScreen }">
+        <div class="modal-content" :class="{ 'is-fullscreen': fullScreen }">
+          <div class="modal-body">
             <img
                 :src="pic.data"
                 alt="Pilt"
                 class="img-fluid"
-                style="max-width: 100%; max-height: 90vh; object-fit: contain;"
+                style="max-width: 100%; max-height: 100vh; object-fit: contain;"
             />
           </div>
           <div class="modal-footer">
@@ -25,20 +29,20 @@ import Modal from "@/components/modal/Modal.vue";
 
 export default {
   name: 'TrailViewPictureModal',
-  components: {Modal},
+  components: { Modal },
   props: {
     modalIsOpen: {
       type: Boolean,
       required: true
     },
+    fullScreen: { // Uus prop fullscreen jaoks
+      type: Boolean,
+      default: false
+    },
     pic: {
       type: Object,
       required: true
-    },
-    methods: {
     }
   }
 }
 </script>
-
-

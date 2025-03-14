@@ -2,8 +2,10 @@
   <TrailViewPictureModal
       :modalIsOpen="isModalOpen"
       :pic="selectedPicture"
+      :fullScreen="true"
       @event-close-modal="closePictureModal"
   />
+
   <div class="container text-center">
     <div class="row">
       <div class="col">
@@ -81,7 +83,7 @@
                   <div v-for="(pic, index) in trailPictures" :key="index" class="col-4 mb-3">
                     <div class="d-flex flex-column align-items-center">
                       <img :src="pic.data" alt="picture" class="img-thumbnail"
-                           style="width: 175px; height: 175px; object-fit: cover;"
+                           style="width: 190px; height: 190px; object-fit: cover;"
                            @click="openPictureModal(pic)">
                       <span class="mt-2 small">{{ pic.name }}</span>
                     </div>
