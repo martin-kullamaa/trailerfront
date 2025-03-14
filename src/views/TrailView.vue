@@ -40,6 +40,9 @@
             </div>
           </div>
         </div>
+        <div>
+          <button @click="goToEdit(trail.trailId)" class="btn btn-success mt-2 w-40 me-3">Edit</button>
+        </div>
       </div>
 
       <div class="col">
@@ -87,6 +90,7 @@
 import TrailService from "@/service/TrailService";
 import MapComponent from "@/components/MapComponent.vue";
 import PictureService from "@/service/PictureService";
+import NavigationService from "@/service/NavigationService";
 
 export default {
   name: "TrailView",
@@ -186,6 +190,9 @@ export default {
           return ['fas', 'question-circle'];
       }
     },
+    goToEdit(trailId) {
+      this.$router.push({ name: 'EditTrail', params: { trailId: trailId } });
+    }
   },
   beforeMount() {
     this.getTrail()

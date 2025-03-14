@@ -1,6 +1,13 @@
 import axios from "axios";
 
+
 export default {
+
+    //Trail Edit (trailId)
+    getTrailById(trailId) {
+        return axios.get(`/trails/${trailId}`);
+    },
+
     sendPostTrailRequest(newTrail) {
         return axios.post('/trail', newTrail);
     },

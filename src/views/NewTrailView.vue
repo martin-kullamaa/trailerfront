@@ -71,11 +71,36 @@ export default {
       }
     };
   },
-
   created() {
-    this.newTrail.profileId = sessionStorage.getItem('profileId');
+    // Установка profileId из сессии или глобального состояния
+    this.newTrail.profileId = sessionStorage.getItem('profileId') || '1'; // Значение по умолчанию или из сессии
+
+    // Проверка наличия trailId и загрузка данных трейла, если он есть
+    const trailId = this.$route.params.trailId;
+    if (trailId) {
+      this.loadTrail(trailId);
+    }
   },
   methods: {
+    // Loading created trail data for editing
+    loadTrail(trailId) {
+      console.log("Loading trail with ID:", trailId);
+      TrailService.getTrailById(trailId).then(response => {
+        console.log("Trail data received:", response.data);
+        this.newTrail = {
+          ...this.newTrail,
+          ...response.data,
+          trailLength: response.data.trailLength || 0,
+          startName: "Start Point",
+          startLatitude: response.data.startLatitude || 0,
+          startLongitude: response.data.startLongitude || 0,
+          locationStopDtos: response.data.locationStopDtos || []
+        };
+      }).catch(error => {
+        console.error("Error loading trail details:", error);
+      });
+    },
+
     handleMarkerPlaced(markerData) {
       if (this.newTrail.startLatitude === 0 && this.newTrail.startLongitude === 0) {
         // Setting the startname
