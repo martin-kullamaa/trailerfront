@@ -1,7 +1,11 @@
 <template>
   <div class="map-wrapper" :style="{ width: width, height: height }">
     <div ref="mapContainer" class="map-container" style="width: 100%; height: 100%;"></div>
-    <button v-if="isTrailPage || isEditPage" @click="clearMarkers" class="btn btn-danger clear-markers-btn">
+    <button
+        v-if="isTrailPage || isEditPage"
+        @click="clearMarkers"
+        class="btn btn-danger clear-markers-btn"
+    >
       Clear Markers
     </button>
     <div v-else-if="isHomePage" class="map-overlay-dropdown">
@@ -49,12 +53,15 @@ export default {
     return {
       map: null,
       userMarkers: [],
-      trailPolyline: null
+      polyline: null
     };
   },
   computed: {
     isTrailPage() {
-      return this.$route.path === '/trail' || this.$route.path.startsWith('/edit-trail/')
+      return (
+          this.$route.path === '/trail' ||
+          this.$route.path.startsWith('/edit-trail/')
+      );
     },
     isHomePage() {
       return this.$route.path === '/';
@@ -67,7 +74,7 @@ export default {
 
     initializeMap() {
       this.map = L.map(this.$refs.mapContainer).setView(this.center, this.zoom);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(this.map);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19}).addTo(this.map);
 
       if (this.clickToAddMarker) {
         this.map.on('click', (e) => {
@@ -78,29 +85,28 @@ export default {
             iconSize: [28, 28],
             iconAnchor: [1, 30]
           });
-          const newMarker = L.marker(e.latlng, { icon: customIcon }).addTo(this.map);
+          const newMarker = L.marker(e.latlng, {icon: customIcon}).addTo(this.map);
           this.userMarkers.push(newMarker);
 
+          // Create/update the polyline connecting all userMarkers (if more than one exists)
           const coordinates = this.userMarkers.map(marker => marker.getLatLng());
-
-          // Only update or create polyline if there are at least two points
           if (coordinates.length > 1) {
-            if (this.trailPolyline) {
-              this.trailPolyline.setLatLngs(coordinates);
+            if (this.polyline) {
+              this.polyline.setLatLngs(coordinates);
             } else {
-              this.trailPolyline = L.polyline(coordinates, { color: 'blue' }).addTo(this.map);
+              this.polyline = L.polyline(coordinates, {color: 'blue'}).addTo(this.map);
             }
           }
 
-          this.$emit('marker-placed', { lat: e.latlng.lat, lng: e.latlng.lng });
+          this.$emit('marker-placed', {lat: e.latlng.lat, lng: e.latlng.lng});
         });
       }
     },
 
     addMarkers() {
-      // Eemalda kõik olemasolevad markerid
+      // Remove all existing markers from the map
       this.map.eachLayer((layer) => {
-        if (layer instanceof L.Marker || layer instanceof L.Polyline) {
+        if (layer instanceof L.Marker) {
           this.map.removeLayer(layer);
         }
       });
@@ -113,17 +119,21 @@ export default {
             iconSize: [28, 28],
             iconAnchor: [1, 30]
           });
-          L.marker([marker.latitude, marker.longitude], { icon: customIcon }).addTo(this.map);
+          L.marker([marker.latitude, marker.longitude], {icon: customIcon}).addTo(this.map);
         });
-        // Update polyline
-        const coordinates = this.markers.map(marker => L.latLng(marker.latitude, marker.longitude));
-        if (this.trailPolyline) {
-          this.trailPolyline.setLatLngs(coordinates);
-        } else {
-          this.trailPolyline = L.polyline(coordinates, { color: 'blue' }).addTo(this.map);
+        // If not in click-to-add mode, update polyline using markers prop
+        if (!this.clickToAddMarker) {
+          const coordinates = this.markers.map(marker => L.latLng(marker.latitude, marker.longitude));
+          if (coordinates.length > 1) {
+            if (this.polyline) {
+              this.polyline.setLatLngs(coordinates);
+            } else {
+              this.polyline = L.polyline(coordinates, {color: 'blue'}).addTo(this.map);
+            }
+          }
         }
       } else {
-        const customIcon = L.icon({
+        const defaultIcon = L.icon({
           iconUrl: markerIcon,
           shadowUrl: markerShadow,
           iconSize: [25, 41],
@@ -131,10 +141,9 @@ export default {
           popupAnchor: [1, -34],
           shadowSize: [41, 41]
         });
-
         this.markers.forEach(marker => {
           if (marker.latitude === 0 && marker.longitude === 0) return;
-          const markerObj = L.marker([marker.latitude, marker.longitude], { icon: customIcon }).addTo(this.map);
+          const markerObj = L.marker([marker.latitude, marker.longitude], {icon: defaultIcon}).addTo(this.map);
           markerObj.on('click', () => {
             this.$emit('marker-clicked', marker.startId);
           });
@@ -143,16 +152,16 @@ export default {
     },
 
     clearMarkers() {
-      // Eemalda kõik kasutaja poolt lisatud markerid
+      // Remove all user-added markers
       this.userMarkers.forEach(marker => {
         this.map.removeLayer(marker);
       });
       this.userMarkers = [];
 
-      // Eemalda polüliin
-      if (this.trailPolyline) {
-        this.map.removeLayer(this.trailPolyline);
-        this.trailPolyline = null;
+      // Remove polyline if it exists
+      if (this.polyline) {
+        this.map.removeLayer(this.polyline);
+        this.polyline = null;
       }
 
       this.$emit('markers-cleared');
@@ -165,7 +174,7 @@ export default {
 
   watch: {
     markers(newMarkers) {
-      this.addMarkers(); // Kui markers prop muutub, uuenda kaarti
+      this.addMarkers(); // Update map when markers prop changes
     }
   }
 };
