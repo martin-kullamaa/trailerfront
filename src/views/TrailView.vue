@@ -48,7 +48,7 @@
             <div><span class="badge text-bg-success custom-badge">{{ trail.trailLength }}km</span></div>
           </div>
         </div>
-        <div class="d-flex align-items-center">
+        <div  v-if="isOwner" class="d-flex align-items-center">
           <div>
             <button @click="goToEdit(startId)" class="btn btn-success pointer mt-2  me-3">Edit trail</button>
           </div>
@@ -170,6 +170,10 @@ export default {
         })
       }
       return markers;
+    },
+    isOwner() {
+      const storedProfileId = sessionStorage.getItem('profileId');
+      return storedProfileId && Number(storedProfileId) === this.trail.profileId;
     }
   },
   methods: {
