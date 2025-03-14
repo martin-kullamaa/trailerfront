@@ -26,7 +26,9 @@
           </div>
 
           <button @click="goHome" class="btn btn-success mt-2 w-40 me-3">Back</button>
-          <button @click="submitTrail" type="submit" class="btn btn-success mt-2 w-40">Continue</button>
+
+          <button @click="submitTrail" v-if="startId === 0" type="submit" class="btn btn-success mt-2 w-40">Continue</button>
+          <button @click="changeTrail" v-if="startId !== 0" type="submit" class="btn btn-success mt-2 w-40">Save changes</button>
 
         </div>
         <div class="col">
@@ -161,6 +163,19 @@ export default {
           .catch(error => {
             console.error('There was an error!', error.response ? error.response.data : error);
             alert('Failed to add trail.');
+          });
+    },
+
+    changeTrail() {
+      TrailService.sedPutTrailRequest(this.newTrail)
+          .then(response => {
+            const editedTrailId = response.data;
+            alert('Trail successfully updated!');
+            NavigationService.navigateToNewTrailDetailsView(editedTrailId);
+          })
+          .catch(error => {
+            console.error('There was an error!', error.response ? error.response.data : error);
+            alert('Failed to update trail.');
           });
     }
 
