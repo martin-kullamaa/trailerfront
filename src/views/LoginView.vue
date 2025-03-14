@@ -2,26 +2,31 @@
   <div>
     <div class="container text-center mt-5">
       <div class="row justify-content-center">
-
         <div class="col col-3">
-          <div class="input-group mb-3">
-            <input v-model="username" type="text" class="form-control" placeholder="Username" :class="{'is-invalid': showErrors && !username}">
-          </div>
-          <div class="input-group mb-3">
-            <input v-model="password" type="password" class="form-control" placeholder="Password" :class="{'is-invalid': showErrors && !password}">
-          </div>
+          <form @submit.prevent="login">
+            <div class="input-group mb-3">
+              <input v-model="username" type="text" class="form-control" placeholder="Username"
+                     :class="{'is-invalid': showErrors && !username}">
+            </div>
+            <div class="input-group mb-3">
+              <input v-model="password" type="password" class="form-control" placeholder="Password"
+                     :class="{'is-invalid': showErrors && !password}">
+            </div>
+            <div class="mb-3">
+              <button type="submit" class="btn btn-success mt-2 w-50">Log in</button>
+            </div>
+          </form>
           <div class="mb-3">
-            <button @click="login" type="submit" class="btn btn-success mt-2 w-50">Log in</button>
-          </div>
-          <div class="mb-3">
-            <button @click="navigateToRegisterView" type="button" class="btn btn-success mt-2 w-50">Register</button>
+            <button @click="navigateToRegisterView" type="button" class="btn btn-success mt-2 w-50">
+              Register
+            </button>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 import LoginService from "@/service/LoginService";

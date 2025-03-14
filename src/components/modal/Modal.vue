@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div v-if="modalIsOpen" class="modal-overlay">
-      <div class="modal-container">
+    <div v-if="modalIsOpen" class="modal-overlay" @click="closeOnOverlay">
+      <div class="modal-container" @click.stop>
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5">
               <slot name="title"></slot>
             </h1>
-            <button type="button" class="btn-close" @click="$emit('event-close-modal')" aria-label="Close"/>
+            <button type="button" class="btn-close" @click="$emit('event-close-modal')" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <slot name="body"></slot>
@@ -24,9 +24,14 @@
 <script>
 export default {
   name: "Modal",
-  props:{
+  props: {
     modalIsOpen: Boolean,
-    fullScreen: Boolean // Uus prop täisekraani modalite jaoks
+    fullScreen: Boolean
+  },
+  methods: {
+    closeOnOverlay() {
+      this.$emit('event-close-modal');
+    }
   }
 };
 </script>
