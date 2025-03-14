@@ -15,7 +15,7 @@
         </button>
         <ul class="dropdown-menu">
           <li v-for="type in types" :key="type.typeId">
-            <a class="dropdown-item pointer" @click="emitFilter(type.typeId)">- {{ type.name }}</a>
+            <a class="dropdown-item pointer" @click="emitFilter(type.typeId)">{{ type.name }}</a>
           </li>
           <li>
             <a class="dropdown-item pointer clear-item" @click="emitFilter(null)">clear</a>
