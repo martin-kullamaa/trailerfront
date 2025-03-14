@@ -137,6 +137,13 @@ export default {
             this.polyline = L.polyline(coordinates, { color: 'blue' }).addTo(this.map);
           }
         }
+
+        // After populating userMarkers and updating the polyline:
+        const coordinatesForZoom = this.userMarkers.map(marker => marker.getLatLng());
+        if (coordinatesForZoom.length > 0) {
+          const bounds = L.latLngBounds(coordinatesForZoom);
+          this.map.fitBounds(bounds, { padding: [50, 50] });
+        }
       } else {
         // Default icon branch (without polyline)
         const defaultIcon = L.icon({
