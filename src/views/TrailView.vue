@@ -41,7 +41,7 @@
           </div>
         </div>
         <div>
-          <button @click="goToEdit(trail.trailId)" class="btn btn-success mt-2 w-40 me-3">Edit</button>
+          <button @click="goToEdit(startId)" class="btn btn-success mt-2 w-40 me-3">Edit</button>
         </div>
       </div>
 
@@ -190,8 +190,8 @@ export default {
           return ['fas', 'question-circle'];
       }
     },
-    goToEdit(trailId) {
-      this.$router.push({ name: 'EditTrail', params: { trailId: trailId } });
+    goToEdit(startId) {
+      this.$router.push({ name: 'EditTrail', params: { startId: startId } });
     }
   },
   beforeMount() {
