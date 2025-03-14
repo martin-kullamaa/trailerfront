@@ -3,8 +3,9 @@
          @event-close-modal="$emit('event-close-modal')"
   >
     <template #title>
-      Do you want to log out?
+      <div class="mt-2">Do you want to log out?</div>
     </template>
+
 
     <template #footer>
       <button @click="executeLogOut" class="btn btn-success mt-2 w-40">Log Out</button>

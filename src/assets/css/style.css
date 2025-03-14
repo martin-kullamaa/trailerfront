@@ -67,6 +67,7 @@
     max-width: 500px;
     border-radius: 8px;
     padding: 20px;
+    border: 2px solid green !important;
 }
 
 /* Standard modal content */
@@ -74,7 +75,7 @@
     width: 90%;
     max-width: 900px;
     background-color: white;
-    border-radius: 8px;
+    /*border-radius: 8px;*/
     padding: 20px;
 }
 
@@ -115,7 +116,7 @@
 }
 .circular-logo {
     border-radius: 50%;
-    border: 2px solid #ccc; /* Optional: adjust border thickness and color */
+    border: 2px solid green; /* Optional: adjust border thickness and color */
     object-fit: cover; /* Ensures the image fills the circle nicely */
 }
 
