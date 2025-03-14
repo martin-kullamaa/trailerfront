@@ -79,7 +79,7 @@
       <div class="col-md-12">
         <div class="card transparent-card mb-3">
           <div class="card-body">
-            <h6 class="mt-2">Lisatud pildid:</h6>
+            <h6 class="mt-2">Added pictures:</h6>
             <div v-if="trailPictures.length > 0" class="mt-3">
               <div class="container">
                 <div class="row">
