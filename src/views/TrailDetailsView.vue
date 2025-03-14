@@ -1,5 +1,5 @@
 <template>
-<!--  TODO: LISA FINISH NUPP-->
+  <!--  TODO: LISA FINISH NUPP-->
   <div class="row justify-content-center">
 
     <div class="col-sm-3 mb-3">
@@ -54,15 +54,19 @@
                    :class="{'is-invalid': equipmentError && !newEquipment.trim()}">
             <button
                 @click="addNewEquipment()"
-                class="btn btn-success" type="button" aria-expanded="false">Add
+                class="btn btn-success mx-auto" type="button" aria-expanded="false">Add
             </button>
+
             <font-awesome-icon
                 @click="showEquipmentInput = false"
                 icon="angle-up"
                 class="position-absolute pointer"
-                style="top: 94%; left: calc(50% + 110px); transform: translateY(-50%);"/>
+                style="top: 80%; left: calc(50% + 110px); transform: translateY(-50%);"/>
           </div>
 
+          <button @click="handleFinish" class="btn btn-outline-success w-50 mt-5">
+            Finish
+          </button>
 
         </div>
 
@@ -97,7 +101,7 @@
             <div v-for="trailType in trailTypes" :key="trailType.typeId" class="col">
               <div>
                 <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon"/>
-                <font-awesome-icon @click="deleteTrailType(trailType.typeId)" icon="trash" class="trash-icon pointer"/>
+                <font-awesome-icon @click="deleteTrailType(trailType.typeId)" icon="xmark" class="trash-icon pointer"/>
               </div>
             </div>
           </div>
@@ -124,6 +128,8 @@ import PictureService from "@/service/PictureService";
 import EquipmentService from "@/service/EquipmentService";
 import TypeService from "@/service/TypeService";
 import TrailService from "@/service/TrailService";
+import LocationService from "@/service/LocationService";
+import NavigationService from "@/service/NavigationService";
 
 export default {
   name: "TrailDetailsView",
@@ -134,6 +140,7 @@ export default {
       equipmentError: false,
       showEquipmentInput: false,
       trailId: this.$route.params.trailId,
+      startId: 0,
       trailPictures: [],
       currentPicture: {
         data: '',
@@ -155,6 +162,15 @@ export default {
     }
   },
   methods: {
+
+
+
+
+    handleFinish() {
+      LocationService.sendGetStartIdRequest(this.trailId)
+          .then(response => NavigationService.navigateToTrailView(response.data))
+          .catch(error => this.someDataBlockErrorResponseObject = error.response.data)
+    },
 
     setPictureData(pictureData) {
       this.currentPicture.data = pictureData;
