@@ -37,7 +37,7 @@
                 style="top: 50%; left: calc(50% + 110px); transform: translateY(-50%);"/>
             <ul class="dropdown-menu custom-dropdown w-50">
               <li v-for="currentEquipment in equipment" :key="currentEquipment.id">
-                <a @click="addTrailEquipment(currentEquipment)" class="dropdown-item" href="#">{{
+                <a @click="addTrailEquipment(currentEquipment)" class="dropdown-item" href="#">- {{
                     currentEquipment.name
                   }}</a>
               </li>
