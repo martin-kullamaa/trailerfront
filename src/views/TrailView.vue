@@ -14,12 +14,12 @@
               <h1>{{ trail.trailName }}</h1>
             </div>
 
-            <div class="row">
-              <h3>{{ trail.startName }}</h3>
-            </div>
+<!--            <div class="row">-->
+<!--              <h3>{{ trail.startName }}</h3>-->
+<!--            </div>-->
             <h6 class="mt-2 text-start">Description:</h6>
-            <div class="row">
-              <p class="text-start">{{ trail.trailDescription }}</p>
+            <div>
+              <p class="text-description">{{ trail.trailDescription }}</p>
             </div>
 
           </div>

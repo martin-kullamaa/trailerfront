@@ -19,10 +19,12 @@
           </div>
           <div class="mb-3">
             <label for="trailDescription" class="form-label text-start d-block">Description</label>
-            <textarea v-model="newTrail.trailDescription" class="form-control"
+            <textarea v-model="newTrail.trailDescription" class="form-control textarea-description"
                       :class="{'is-invalid': showErrors && !newTrail.trailDescription}"
-                      id="trailDescription" rows="12"></textarea>
-            <div class="invalid-feedback"></div>
+                      id="trailDescription" rows="4" maxlength="312"></textarea>
+            <div class="invalid-feedback" v-show="showErrors && !newTrail.trailDescription">
+              Description must be under 480 characters.
+            </div>
           </div>
 
           <button @click="goHome" class="btn btn-success mt-2 w-40 me-3">Back</button>
