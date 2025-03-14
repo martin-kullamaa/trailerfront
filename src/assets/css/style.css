@@ -224,4 +224,23 @@ div.custom-alert {
     padding: 17px;
 }
 
+.textarea-description {
+    resize: none;             /* Запрет изменения размера пользователем */
+    width: 1200px;            /* Ширина под 120 символов при ширине символа 10px */
+    height: 280px;             /* Высота под 4 строки по 20px каждая */
+    font-family: 'Courier New', Courier, monospace; /* Моноширинный шрифт для простоты расчёта */
+    font-size: 12px;          /* Размер шрифта */
+    line-height: 20px;        /* Высота строки */
+    overflow: hidden;         /* Скрытие текста, выходящего за пределы поля */
+}
 
+.text-description {
+    font-size: 20px;
+    text-align: justify;
+    line-height: 1.2em;
+    max-height: 9.6em; /* 4 строки * 1.2em на строку */
+    width: 560px;
+    overflow-wrap: break-word;
+    white-space: pre-wrap; /* Позволяет тексту переноситься и сохраняет пробелы */
+    overflow: hidden;
+}

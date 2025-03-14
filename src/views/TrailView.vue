@@ -16,34 +16,36 @@
               <h1>{{ trail.trailName }}</h1>
             </div>
 
-            <div class="row">
-              <h3>{{ trail.startName }}</h3>
-            </div>
+<!--            <div class="row">-->
+<!--              <h3>{{ trail.startName }}</h3>-->
+<!--            </div>-->
             <h6 class="mt-2 text-start">Description:</h6>
-            <div class="row">
-              <p class="text-start">{{ trail.trailDescription }}</p>
+            <div>
+              <p class="text-description">{{ trail.trailDescription }}</p>
             </div>
 
           </div>
         </div>
-        <div class="card transparent-card">
+        <div class="card transparent-card" align="left">
           <h6 class="mt-2">Added equipment:</h6>
-          <div class="container text-center">
+          <div align="left">
           <span v-for="trailEquipment in trailEquipment" :key="trailEquipment.equipmentId"
                 class="badge text-bg-success custom-badge me-3">
                 {{ trailEquipment.name }}
           </span>
           </div>
-          <div class="d-flex align-items-center justify-content-center flex-wrap py-2">
-            <div class="mx-2">
-              <span class="badge text-bg-success custom-badge">Type(s):</span>
+          <div class="d-flex align-items-center flex-wrap py-2">
+            <div class="mx-2" align="left">
+<!--              <span class="badge text-bg-success custom-badge">Type(s):</span>-->
+              <h6 class="mt-2">Type(s):</h6>
             </div>
             <div v-for="trailType in trailTypes" :key="trailType.typeId" class="mx-2">
               <font-awesome-icon :icon="getTypeIcon(trailType.typeId)" class="main-icon small"/>
             </div>
-            <div class="mx-2">
-              <span class="badge text-bg-success custom-badge">Trail length: {{ trail.trailLength }}km</span>
-            </div>
+          </div>
+          <div class="mx-2 d-flex align-items-center">
+            <div><h6 class="mt-2 text-start">Trail length:</h6></div>
+            <div><span class="badge text-bg-success custom-badge">{{ trail.trailLength }}km</span></div>
           </div>
         </div>
 
