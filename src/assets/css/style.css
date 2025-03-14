@@ -1,12 +1,14 @@
 .dropdown-item {
     color: #148024 !important;
     font-weight: bold !important;
+
 }
 
 .clear-item {
     color: red !important;
     font-weight: bold !important;
-    /* Add any additional styling you want here */
+
+    text-align: center !important;
 }
 
 .map-wrapper {
