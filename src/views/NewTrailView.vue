@@ -158,7 +158,7 @@ export default {
           .then(response => {
             const newTrailId = response.data;
             alert('Trail successfully added!');
-            NavigationService.navigateToNewTrailDetailsView(newTrailId);
+            NavigationService.navigateToTrailDetailsView(newTrailId);
           })
           .catch(error => {
             console.error('There was an error!', error.response ? error.response.data : error);
@@ -167,11 +167,22 @@ export default {
     },
 
     changeTrail() {
-      TrailService.sedPutTrailRequest(this.newTrail)
+
+      this.showErrors = true;
+      this.errorMessage = "";
+
+      // Kontrollime, kas kõik vajalikud väljad on täidetud
+      if (!this.newTrail.trailName || !this.newTrail.trailLength || !this.newTrail.trailDescription ||
+          this.newTrail.startLatitude === 0 || this.newTrail.startLongitude === 0) {
+        this.errorMessage = "Palun täida kõik kohustuslikud väljad!";
+        return; // Lõpetab funktsiooni täitmise, kui väljad pole täidetud
+      }
+
+      TrailService.sendPutTrailRequest(this.newTrail)
           .then(response => {
             const editedTrailId = response.data;
             alert('Trail successfully updated!');
-            NavigationService.navigateToNewTrailDetailsView(editedTrailId);
+            NavigationService.navigateToTrailDetailsView(editedTrailId);
           })
           .catch(error => {
             console.error('There was an error!', error.response ? error.response.data : error);
