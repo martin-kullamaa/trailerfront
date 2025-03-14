@@ -25,7 +25,8 @@
 export default {
   name: "Modal",
   props:{
-    modalIsOpen: Boolean
+    modalIsOpen: Boolean,
+    fullScreen: Boolean // Uus prop täisekraani modalite jaoks
   }
 };
 </script>

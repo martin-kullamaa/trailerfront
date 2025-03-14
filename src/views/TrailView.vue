@@ -1,4 +1,9 @@
 <template>
+  <TrailViewPictureModal
+      :modalIsOpen="isModalOpen"
+      :pic="selectedPicture"
+      @event-close-modal="closePictureModal"
+  />
   <div class="container text-center">
     <div class="row">
       <div class="col">
@@ -58,7 +63,6 @@
         </div>
 
 
-
       </div>
     </div>
     <div class="row mt-5">
@@ -72,9 +76,9 @@
                   <div v-for="(pic, index) in trailPictures" :key="index" class="col-4 mb-3">
                     <div class="d-flex flex-column align-items-center">
                       <img :src="pic.data" alt="picture" class="img-thumbnail"
-                           style="width: 100px; height: 100px; object-fit: cover;">
+                           style="width: 175px; height: 175px; object-fit: cover;"
+                           @click="openPictureModal(pic)">
                       <span class="mt-2 small">{{ pic.name }}</span>
-                      <button @click="removePicture(index)" class="btn btn-sm btn-outline-danger mt-2">Eemalda</button>
                     </div>
                   </div>
                 </div>
@@ -89,14 +93,17 @@
 </template>
 
 <script>
+import TrailViewPictureModal from "@/components/modal/TrailViewPictureModal.vue";
 import TrailService from "@/service/TrailService";
 import MapComponent from "@/components/MapComponent.vue";
 import PictureService from "@/service/PictureService";
-import NavigationService from "@/service/NavigationService";
 
 export default {
   name: "TrailView",
-  components: {MapComponent},
+  components: {
+    MapComponent,
+    TrailViewPictureModal,
+  },
   data() {
     return {
       startId: this.$route.params.startId,
@@ -129,6 +136,8 @@ export default {
         data: '',
         name: ''
       }],
+      isModalOpen: false, // Modal algselt suletud
+      selectedPicture: {}  // Valitud pilt
     }
   },
   computed: {
@@ -193,7 +202,15 @@ export default {
       }
     },
     goToEdit(startId) {
-      this.$router.push({ name: 'EditTrail', params: { startId: startId } });
+      this.$router.push({name: 'EditTrail', params: {startId: startId}});
+    },
+    openPictureModal(pic) {
+      this.selectedPicture = pic;
+      this.isModalOpen = true;
+    },
+    closePictureModal() {
+      this.isModalOpen = false;
+      this.selectedPicture = {};
     }
   },
   beforeMount() {
