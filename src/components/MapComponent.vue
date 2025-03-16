@@ -168,6 +168,12 @@ export default {
         this.markers.forEach(marker => {
           if (marker.latitude === 0 && marker.longitude === 0) return;
           const markerObj = L.marker([marker.latitude, marker.longitude], { icon: defaultIcon }).addTo(this.map);
+          // // Bind a tooltip that displays the marker name when hovered over.
+          // markerObj.bindTooltip(marker.name, {
+          //   permanent: false, // Set to true if you want the tooltip always visible.
+          //   direction: 'bottom',
+          //   opacity: 0.8
+          // });
           markerObj.on('click', () => {
             this.$emit('marker-clicked', marker.startId);
           });

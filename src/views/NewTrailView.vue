@@ -6,7 +6,7 @@
         <div class="col col-4">
           <div class="mb-3">
             <label for="trailName" class="form-label text-start d-block">Trail name</label>
-            <input v-model="newTrail.trailName" type="text" class="form-control"
+            <input v-model="combinedName" type="text" class="form-control"
                    :class="{'is-invalid': showErrors && !newTrail.trailName}">
             <div class="invalid-feedback"></div>
           </div>
@@ -73,7 +73,7 @@ export default {
         trailName: "",
         trailDescription: "",
         trailLength: 0,
-        startName: "Start Point",
+        startName: "",
         startLatitude: 0,
         startLongitude: 0,
         locationStopDtos: []
@@ -88,6 +88,15 @@ export default {
     }
   },
   computed: {
+    combinedName: {
+      get() {
+        return this.newTrail.trailName;
+      },
+      set(value) {
+        this.newTrail.trailName = value;
+        this.newTrail.startName = value;
+      }
+    },
     trailMarkers() {
       const markers = [];
       // Add start marker if available
