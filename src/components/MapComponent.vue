@@ -75,7 +75,7 @@ export default {
     initializeMap() {
       this.map = L.map(this.$refs.mapContainer).setView(this.center, this.zoom);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19}).addTo(this.map);
-
+      console.log('olen siin')
       if (this.clickToAddMarker) {
         this.map.on('click', (e) => {
           const order = this.userMarkers.length;
@@ -137,6 +137,17 @@ export default {
             this.polyline = L.polyline(coordinates, { color: 'blue' }).addTo(this.map);
           }
         }
+
+        // Calculate the total distance between consecutive markers in userMarkers:
+        let totalDistance = 0;
+        for (let i = 1; i < this.userMarkers.length; i++) {
+          const prevLatLng = this.userMarkers[i - 1].getLatLng();
+          const currLatLng = this.userMarkers[i].getLatLng();
+          totalDistance += prevLatLng.distanceTo(currLatLng); // returns distance in meters
+        }
+        const distanceKm = totalDistance / 1000;
+        const distanceKmRounded = parseFloat(distanceKm.toFixed(1));
+        this.$emit('distance-calculated', distanceKmRounded);
 
         // After populating userMarkers and updating the polyline:
         const coordinatesForZoom = this.userMarkers.map(marker => marker.getLatLng());

@@ -31,7 +31,7 @@
           <button @click="goHome" class="btn btn-success mt-2 w-40 me-3">Back</button>
 
           <button @click="submitTrail" v-if="startId === 0" type="submit" class="btn btn-success mt-2 w-40">Continue</button>
-          <button @click="changeTrail" v-if="startId !== 0" type="submit" class="btn btn-success mt-2 w-40">Save changes</button>
+          <button @click="changeTrail" v-if="startId !== 0" type="submit" class="btn btn-success mt-2 w-40">Continue</button>
 
         </div>
         <div class="col">
@@ -44,6 +44,7 @@
                 :zoom="8"
                 @marker-placed="handleMarkerPlaced"
                 @markers-cleared="resetTrailData"
+                @distance-calculated="updateDistance"
                 :width="'80%'"
                 :height="'720px'"
             />
@@ -135,6 +136,11 @@ export default {
         });
       }
     },
+
+    updateDistance(distanceKmRounded) {
+      this.newTrail.trailLength = distanceKmRounded
+    },
+
     goHome() {
       this.resetTrailData();
       NavigationService.navigateToHomeView()
