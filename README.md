@@ -1,4 +1,4 @@
-# trailerfront
+# Trailer
 
 ## Project setup
 ```
